@@ -7,9 +7,13 @@ import {  Route, Routes } from 'react-router-dom';
 // action
 import { isAuthenticated } from './store/selectors/AuthSelectors';
 /// Style
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
+import "./scss/main.scss";
+import "./scss/app.scss";
 import "./vendor/bootstrap-select/dist/css/bootstrap-select.min.css";
 import './vendor/datatables/css/dataTables.min.css';
-import "./css/style.css";
+
 
 
 const SignUp = lazy(() => import('./jsx/pages/Registration'));
@@ -69,9 +73,9 @@ function App (props: any) {
 	}
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = () => {
     return {
-        isAuthenticated: isAuthenticated(state),
+        isAuthenticated: isAuthenticated(),
     };
 };
 

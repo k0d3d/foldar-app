@@ -1,23 +1,26 @@
-import React from 'react'
-import { useContext } from 'react'
-import { Route, Routes } from 'react-router-dom';
-import { ThemeContext } from '../context/ThemeContext';
-import Home from './components/dashboard/Home';
-import Footer from './layouts/Footer';
-import AppNav from './layouts/nav';
+import { useContext } from "react";
+import { Route, Routes } from "react-router-dom";
+import { ThemeContext } from "../context/ThemeContext";
+import Home from "./components/dashboard/Home";
+import Footer from "./layouts/Footer";
+import AppNav from "./layouts/nav";
 
-import "./index.css";
-import "./chart.css";
-import "./step.css";
+import "../scss/index.css";
+import "../scss/chart.css";
+import "../scss/step.css";
+import { AddItemPage } from "./pages/Items/AddItem";
 
 function Page() {
   const { menuToggle } = useContext(ThemeContext);
 
   const routes = [
-    { url: "", component: Home },
-    { url: "dashboard", component: Home },
-
-  ]
+    { url: "", component: <Home /> },
+    { url: "dashboard", component: <Home /> },
+    {
+      url: "add-item",
+      component: AddItemPage(),
+    },
+  ];
 
   const pathname = window.location.pathname;
   // let path = pathname.split("/");
@@ -29,8 +32,9 @@ function Page() {
     <>
       <div
         id={`${!pagePath ? "main-wrapper" : ""}`}
-        className={`${!pagePath ? "show" : "vh-100"}  ${menuToggle ? "menu-toggle" : ""
-          }`}
+        className={`${!pagePath ? "show" : "vh-100"}  ${
+          menuToggle ? "menu-toggle" : ""
+        }`}
       >
         <AppNav />
         <div className={`${!pagePath ? "content-body" : ""}`}>
@@ -40,13 +44,8 @@ function Page() {
           >
             <Routes>
               {routes.map((data, i) => (
-                <Route
-                  key={i}
-                  path={`/${data.url}`}
-                  element={<data.component />}
-                />
+                <Route key={i} path={`/${data.url}`} element={data.component} />
               ))}
-
             </Routes>
           </div>
         </div>
@@ -56,4 +55,4 @@ function Page() {
   );
 }
 
-export default Page
+export default Page;

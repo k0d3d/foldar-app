@@ -1,12 +1,11 @@
-import React, { Fragment, useContext, useState } from "react";
+import { Fragment, useContext } from "react";
 /// React router dom
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../../../context/ThemeContext";
 
 
 const NavHader = () => {
-  const [toggle, setToggle] = useState(false);
-  const { navigationHader, openMenuToggle, background } = useContext(
+  const { navigationHader, background } = useContext(
     ThemeContext
   );
   return (

@@ -25,6 +25,9 @@
         "react/prop-types": "off",
         "no-mixed-spaces-and-tabs": "off",
         "@typescript-eslint/no-explicit-any": "off",
-        "react/no-unknown-property": "off"
+        "react/no-unknown-property": "off",
+        "@typescript-eslint/no-extra-semi": "off",
+        "react/no-unescaped-entities": "warn",
+        "react/react-in-jsx-scope": "off"
     }
 }

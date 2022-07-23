@@ -120,8 +120,8 @@ function Register(props) {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => {
     return {
