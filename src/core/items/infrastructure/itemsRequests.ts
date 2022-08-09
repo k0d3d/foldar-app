@@ -1,23 +1,19 @@
+import axiosInstance from '../../auth/infrastructure/axiosInstance'
+import { AddItemPayload, ItemsPayload } from "../type/payload";
 
 
-export const ItemsService = function ($http, Language, Notification) {
+export const ItemsRequestFactory = function (Notification) {
+  
+  const $http = axiosInstance
+
   return {
 
-    items: function (callback) {
-      $http.get('/api/items/listAll')
-        .success(function (data) {
-          Notification.notifier({
-            message: Language.eng.items.list.fetch.success,
-            type: 'success'
-          });
-          callback(data);
-        })
-        .error(function () {
-          Notification.notifier({
-            message: Language.eng.items.list.fetch.error,
-            type: 'error'
-          });
-        });
+    items: async function () {
+      const {data} = await $http.get('/api/items/listAll')
+      if (data) {
+        return data as ItemsPayload[]
+      }
+
     },
 
 
@@ -39,18 +35,17 @@ export const ItemsService = function ($http, Language, Notification) {
 
     //Query Supplier Typeahead
     getSupplierName: function (query, callback) {
-      const supplierName = ""
       $http.get('/api/supplier/typeahead/term/supplierName/query/' + encodeURI(query))
-        .success(function (s) {
+        .then(function (s) {
           const results: string[] = [];
           // $.each(s, function () {
           //   results.push(supplierName);
           // });
           callback(results, s);
         })
-        .error(function () {
+        .catch(function () {
           Notification.notifier({
-            message: Language.eng.items.supplier.typeahead.error,
+            // message: Language.eng.items.supplier.typeahead.error,
             type: 'error'
           });
         });
@@ -58,40 +53,27 @@ export const ItemsService = function ($http, Language, Notification) {
 
 
     summary: function (id, locationId, callback) {
-      $http.get('/api/items/' + encodeURI(id) + '/options/quick/locations/' + encodeURI(locationId)).success(callback);
+      $http.get('/api/items/' + encodeURI(id) + '/options/quick/locations/' + encodeURI(locationId)).then(callback);
     },
 
-    save: function (post, callback) {
-      $http.post('/api/items', { item: post }).success(function (data, status) {
-        Notification.modal({
-          heading: 'Item Added',
-          body: Language.eng.items.save.success,
-          type: 'success',
-        });
-        callback(true, status);
-      }).
-        error(function (data, status) {
-          Notification.modal({
-            heading: 'Error Adding Item',
-            body: Language.eng.items.save.error,
-            type: 'error',
-          });
-          callback(false, status);
-        });
+    save: async function (post: AddItemPayload) {
+      const success = await $http.post('/api/items', { item: post })
+      
+      return success
     },
 
     saveLocation: function (post, callback) {
       $http.post('/api/items/location', post)
-        .success(function (data) {
+        .then(function (data) {
           Notification.notifier({
-            message: Language.eng.stock.location.create.success,
+            // message: Language.eng.stock.location.create.success,
             type: 'success'
           });
           callback(data);
         })
-        .error(function () {
+        .catch(function () {
           Notification.notifier({
-            message: Language.eng.stock.location.create.error,
+            // message: Language.eng.stock.location.create.error,
             type: 'error'
           });
         });
@@ -100,7 +82,7 @@ export const ItemsService = function ($http, Language, Notification) {
     //Gets dispense records from the server
     fetchDispenseRecords: function (status, callback) {
       $http.get('/api/items/locations/records/status/' + status).
-        success(function (data) {
+        then(function (data) {
           callback(data);
         });
     },
@@ -108,17 +90,17 @@ export const ItemsService = function ($http, Language, Notification) {
     //Post a dispense record
     dispense: function (list, callback) {
       $http.post('/api/items/dispense', list).
-        success(function () {
+        then(function () {
           Notification.notifier({
-            message: Language.eng.dispense.approve.success,
+            // message: Language.eng.dispense.approve.success,
             type: 'success'
           });
           Notification.message.close();
           callback();
         }).
-        error(function () {
+        catch(function () {
           Notification.notifier({
-            message: Language.eng.dispense.approve.error,
+            // message: Language.eng.dispense.approve.error,
             type: 'error'
           });
         });
@@ -127,28 +109,28 @@ export const ItemsService = function ($http, Language, Notification) {
 
     //Fetches fields data for an Item
     getItemFields: function (itemId, callback) {
-      $http.get('/api/items/' + encodeURI(itemId) + '/edit').success(callback);
+      $http.get('/api/items/' + encodeURI(itemId) + '/edit').then(callback);
     },
 
     //Fetches fields data for an Item
     getDSProductFields: function (itemId, callback) {
-      $http.get('/api/items/' + itemId + '/ds-product').success(callback);
+      $http.get('/api/items/' + itemId + '/ds-product').then(callback);
     },
 
 
     //Post updated item fields
     update: function (form, callback) {
       $http.put('/api/items/' + form._id + '/edit', form)
-        .success(function () {
+        .then(function () {
           Notification.notifier({
-            message: Language.eng.items.update.success,
+            // message: Language.eng.items.update.success,
             type: 'success'
           });
           callback(true);
         })
-        .error(function () {
+        .catch(function () {
           Notification.notifier({
-            message: Language.eng.items.update.error,
+            // message: Language.eng.items.update.error,
             type: 'error'
           });
         });
@@ -157,22 +139,22 @@ export const ItemsService = function ($http, Language, Notification) {
     //Delete Item
     delete: function (id, callback) {
       $http.delete('/api/items/' + id)
-        .success(callback);
+        .then(callback);
     },
 
     //Add an item category
     addCategory: function (name, callback) {
       $http.post('/api/items/category/', { name: name, parent: '' })
-        .success(function (data) {
+        .then(function (data) {
           Notification.notifier({
-            message: Language.eng.items.category.add.success,
+            // message: Language.eng.items.category.add.success,
             type: 'success'
           });
           callback(data);
         })
-        .error(function () {
+        .catch(function () {
           Notification.notifier({
-            message: Language.eng.items.category.add.error,
+            // message: Language.eng.items.category.add.error,
             type: 'error'
           });
         });
@@ -180,16 +162,16 @@ export const ItemsService = function ($http, Language, Notification) {
     //remove an item category
     delCategory: function (name, callback) {
       $http.delete('/api/items/category/' + name)
-        .success(function () {
+        .then(function () {
           Notification.notifier({
-            message: Language.eng.items.category.delete.success,
+            // message: Language.eng.items.category.delete.success,
             type: 'success'
           });
           callback();
         })
-        .error(function () {
+        .catch(function () {
           Notification.notifier({
-            message: Language.eng.items.category.delete.error,
+            // message: Language.eng.items.category.delete.error,
             type: 'error'
           });
         });
@@ -197,16 +179,16 @@ export const ItemsService = function ($http, Language, Notification) {
     //Add an item form
     addForm: function (name, callback) {
       $http.post('/api/items/form/', { name: name })
-        .success(function (data) {
+        .then(function (data) {
           Notification.notifier({
-            message: Language.eng.items.form.add.success,
+            // message: Language.eng.items.form.add.success,
             type: 'success'
           });
           callback(data);
         })
-        .error(function () {
+        .catch(function () {
           Notification.notifier({
-            message: Language.eng.items.form.add.error,
+            // message: Language.eng.items.form.add.error,
             type: 'error'
           });
         });
@@ -214,16 +196,16 @@ export const ItemsService = function ($http, Language, Notification) {
     //Add an item packaging
     addPackaging: function (name, callback) {
       $http.post('/api/items/packaging/', { name: name, parent: '' })
-        .success(function (data) {
+        .then(function (data) {
           Notification.notifier({
-            message: Language.eng.items.packaging.add.success,
+            // message: Language.eng.items.packaging.add.success,
             type: 'success'
           });
           callback(data);
         })
-        .error(function () {
+        .catch(function () {
           Notification.notifier({
-            message: Language.eng.items.packaging.add.error,
+            // message: Language.eng.items.packaging.add.error,
             type: 'error'
           });
         });
@@ -232,12 +214,12 @@ export const ItemsService = function ($http, Language, Notification) {
     //List Categories
     listCategory: function (callback) {
       $http.get('/api/items/category')
-        .success(function (data) {
+        .then(function (data) {
           callback(data);
         })
-        .error(function () {
+        .catch(function () {
           Notification.notifier({
-            message: Language.eng.items.category.list.error,
+            // message: Language.eng.items.category.list.error,
             type: 'error'
           });
         });
@@ -245,12 +227,12 @@ export const ItemsService = function ($http, Language, Notification) {
     //List Forms
     listForm: function (callback) {
       $http.get('/api/items/form')
-        .success(function (data) {
+        .then(function (data) {
           callback(data);
         })
-        .error(function () {
+        .catch(function () {
           Notification.notifier({
-            message: Language.eng.items.form.list.error,
+            // message: Language.eng.items.form.list.error,
             type: 'error'
           });
         });
@@ -258,12 +240,12 @@ export const ItemsService = function ($http, Language, Notification) {
     //List packaging
     listPackaging: function (callback) {
       $http.get('/api/items/packaging')
-        .success(function (data) {
+        .then(function (data) {
           callback(data);
         })
-        .error(function () {
+        .catch(function () {
           Notification.notifier({
-            message: Language.eng.items.packaging.list.error,
+            // message: Language.eng.items.packaging.list.error,
             type: 'error'
           });
         });
@@ -272,12 +254,12 @@ export const ItemsService = function ($http, Language, Notification) {
     //Prescription Record
     prdt: function (id, cb) {
       $http.get('/api/items/prescribe/' + id)
-        .success(function (d) {
+        .then(function (d) {
           cb(d);
         })
-        .error(function () {
+        .catch(function () {
           Notification.notifier({
-            message: Language.eng.dispense.prescribe.error,
+            // message: Language.eng.dispense.prescribe.error,
             type: 'error'
           });
         });
@@ -286,10 +268,10 @@ export const ItemsService = function ($http, Language, Notification) {
     getByRegNo: function (query, cb) {
       console.log(query);
       $http.get('/api/nafdacdrugs/typeahead?q=' + encodeURI(query))
-        .success(function (d) {
+        .then(function (d) {
           cb(d);
         })
-        .error(function () {
+        .catch(function () {
           alert('An Error Occurred, please check your request');
         });
     }

@@ -5,6 +5,7 @@ export type AddItemForm = {
   itemCategory: number | string | null
   itemTags: string[]
   additionalData?: any
+  invoiceNumber?: any
 }
 
 export type AddItemFormFields = keyof AddItemForm

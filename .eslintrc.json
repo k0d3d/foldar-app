@@ -28,6 +28,9 @@
         "react/no-unknown-property": "off",
         "@typescript-eslint/no-extra-semi": "off",
         "react/no-unescaped-entities": "warn",
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "intno-debugger": "off",
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-this-alias": "off"
     }
 }

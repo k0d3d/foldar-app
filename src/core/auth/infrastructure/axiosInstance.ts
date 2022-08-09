@@ -21,7 +21,7 @@ export function setRefreshToken(token: string) {
 }
 
 const instance  = axios.create({
-  baseURL: process.env.API_URL + ''
+  baseURL: process.env.REACT_APP_API_URL + ''
 });
 
 instance.interceptors.request.use(function (config) {
@@ -48,7 +48,7 @@ instance.interceptors.response.use(function (response) {
 });
 
 const refreshAuthLogic = (failedRequest: any) => axios.post(
-  process.env.NEXT_PUBLIC_SELLER_ONBOARDING_SERVICE_URL + '/api/v1/auth/refresh',
+  process.env.REACT_APP_API_URL + '/api/v1/auth/refresh',
   {
     refresh_token: getRefreshToken()
   }

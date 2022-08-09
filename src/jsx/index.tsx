@@ -1,17 +1,22 @@
 import { useContext } from "react";
-import { Route, Routes } from "react-router-dom";
 import { ThemeContext } from "../context/ThemeContext";
 import Home from "./components/dashboard/Home";
-import Footer from "./layouts/Footer";
-import AppNav from "./layouts/nav";
 
 import "../scss/index.css";
 import "../scss/chart.css";
 import "../scss/step.css";
 import { AddItemPage } from "./pages/Items/AddItem";
+import DefaultPageLayout from "./layouts/Default";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+
+
+
 
 function Page() {
   const { menuToggle } = useContext(ThemeContext);
+  const queryClient = new QueryClient()
+
 
   const routes = [
     { url: "", component: <Home /> },
@@ -30,27 +35,10 @@ function Page() {
 
   return (
     <>
-      <div
-        id={`${!pagePath ? "main-wrapper" : ""}`}
-        className={`${!pagePath ? "show" : "vh-100"}  ${
-          menuToggle ? "menu-toggle" : ""
-        }`}
-      >
-        <AppNav />
-        <div className={`${!pagePath ? "content-body" : ""}`}>
-          <div
-            className={`${!pagePath ? "container-fluid" : ""}`}
-            style={{ minHeight: "60vh" }}
-          >
-            <Routes>
-              {routes.map((data, i) => (
-                <Route key={i} path={`/${data.url}`} element={data.component} />
-              ))}
-            </Routes>
-          </div>
-        </div>
-        <Footer />
-      </div>
+      <QueryClientProvider client={queryClient}>
+
+        <DefaultPageLayout menuToggle={menuToggle} routes={routes} pagePath={pagePath}></DefaultPageLayout>
+      </QueryClientProvider>
     </>
   );
 }

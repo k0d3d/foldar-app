@@ -1,6 +1,8 @@
 import React from 'react'
-import { CreateAddItemForm } from '../../../scripts/CreatePage'
-import { AddItemForm, AddItemFormFieldArgs } from '../../../scripts/iterms/types';
+import { UseAddItem } from '../../../core/items/usecases/add-item';
+import { CreateAddItemForm } from '../../../widgets/CreatePage';
+// import { CreateAddItemForm } from "../../../scripts/items/CreateAddItemForm";
+import { AddItemForm, AddItemFormFieldArgs } from '../../../core/items/type/types';
 
 
 export function AddItemPage() {
@@ -9,11 +11,11 @@ export function AddItemPage() {
     {
       name: "itemName",
       label: "Name",
-      extraClasses: "whgy"
     },
     {
       name: "itemCategory",
-      label: "Category"
+      label: "Category",
+      parentClasses: "col-md-6"
     },
     {
       name: "itemDescription",
@@ -34,9 +36,14 @@ export function AddItemPage() {
     },
   ];
 
+  const handleFormError = (err) => {
+    console.log(err)
+  }
+
   const handleFormSubmit = async (values: AddItemForm) => {
     //c
-    console.log(values);
+    const addItemRequest = new UseAddItem(values)
+    addItemRequest.createItem().catch(err => handleFormError(err))
   };
 
   return (
