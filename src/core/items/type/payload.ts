@@ -8,6 +8,8 @@ export type ItemsPayload = {
   itemCategory: number | string | null
   itemTags: string[]
   additionalData?: any
+  itemLowPoint?: number
+  inStock?: boolean
 } 
 
 export type AddItemPayload = {
@@ -17,6 +19,10 @@ export type AddItemPayload = {
   itemCategory: number | string | null
   itemTags: string[]
   additionalData?: any
+  itemLowPoint?: number
+  orderInvoiceNumber?: string
+  initialStock?: number
+  itemClass?: string
 } 
 
 export type ListItemPayload = {

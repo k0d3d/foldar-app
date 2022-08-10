@@ -1,8 +1,7 @@
-import React from 'react'
-import { Item } from '../../../core/items/domain/Item'
+import { ItemsPayload } from '../../../core/items/type/payload'
 
 type ListItemsTableProps = {
-  items: any[]
+  items: ItemsPayload[]
 }
 
 function ListItemsTable({ items }: ListItemsTableProps) {
@@ -31,58 +30,49 @@ function ListItemsTable({ items }: ListItemsTableProps) {
               <tbody>
                 {
                   items.length > 0 ?
-                    (<tr>
-                      <td>12</td>
-                      <td>Mr. Bobby</td>
-                      <td>Dr. Jackson</td>
-                      <td>01 August 2020</td>
-                      <td>
-                        <span className="badge badge-rounded badge-primary">
-                          Checkin
-                        </span>
-                      </td>
-                      <td>$120</td>
-                      <td>
-                        <div className="dropdown custom-dropdown mb-0">
-                          <div
-                            className="btn sharp btn-primary tp-btn"
-                            data-bs-toggle="dropdown"
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              xmlnsXlink="http://www.w3.org/1999/xlink"
-                              width="18px"
-                              height="18px"
-                              viewBox="0 0 24 24"
-                              version="1.1"
+                    items.map((item, key) => (
+                      <tr key={key}>
+                        <td>{ item.itemName }</td>
+                        <td>{ item.itemCategory }</td>
+                        <td>{ item.itemPrices && item.itemPrices[0] }</td>
+                        <td>{ item.inStock}</td>
+                        <td>
+                          <span className="badge badge-rounded badge-primary">
+                            InStock
+                          </span>
+                        </td>
+                        <td></td>
+                        <td>
+                          <div className="dropdown custom-dropdown mb-0">
+                            <div
+                              className="btn sharp btn-primary tp-btn"
+                              data-bs-toggle="dropdown"
                             >
-                              <g
-                                stroke="none"
-                                strokeWidth={1}
-                                fill="none"
-                                fillRule="evenodd"
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                xmlnsXlink="http://www.w3.org/1999/xlink"
+                                width="18px"
+                                height="18px"
+                                viewBox="0 0 24 24"
+                                version="1.1"
                               >
-                                <rect x={0} y={0} width={24} height={24} />
-                                <circle fill="#000000" cx={12} cy={5} r={2} />
-                                <circle fill="#000000" cx={12} cy={12} r={2} />
-                                <circle fill="#000000" cx={12} cy={19} r={2} />
-                              </g>
-                            </svg>
+                                <g
+                                  stroke="none"
+                                  strokeWidth={1}
+                                  fill="none"
+                                  fillRule="evenodd"
+                                >
+                                  <rect x={0} y={0} width={24} height={24} />
+                                  <circle fill="#000000" cx={12} cy={5} r={2} />
+                                  <circle fill="#000000" cx={12} cy={12} r={2} />
+                                  <circle fill="#000000" cx={12} cy={19} r={2} />
+                                </g>
+                              </svg>
+                            </div>
                           </div>
-                          <div className="dropdown-menu dropdown-menu-end">
-                            <a className="dropdown-item" href="javascript:void();;">
-                              Details
-                            </a>
-                            <a
-                              className="dropdown-item text-danger"
-                              href="javascript:void();;"
-                            >
-                              Cancel
-                            </a>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>) :
+                        </td>
+                      </tr>
+                    ) ) :
                     (
                       <tr>
                         <td>No items have been added.</td>

@@ -37,7 +37,6 @@ export class UseListItems {
         heading: this.Language.items.list.fetch.heading
       });
       return items
-
     }
 
   }

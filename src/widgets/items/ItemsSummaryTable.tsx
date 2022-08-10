@@ -11,7 +11,7 @@ function ItemsSummaryTable() {
   const query = useItemQueries({ queryName: ItemQueryNames.items,  handler: request.listItems.bind(request) })
 
   return (
-    query.data && <ListItemsTable items={query.data} />
+    query.data ? <ListItemsTable items={query.data} /> : <><p>Data unavailable.</p></>
   )
 }
 
