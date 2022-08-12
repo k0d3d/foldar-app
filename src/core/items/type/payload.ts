@@ -16,7 +16,7 @@ export type AddItemPayload = {
   itemName: string
   itemDescription: string
   itemPrices: string[]
-  itemCategory: number | string | null
+  itemCategory: string[]
   itemTags: string[]
   additionalData?: any
   itemLowPoint?: number

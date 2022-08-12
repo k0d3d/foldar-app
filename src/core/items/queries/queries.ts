@@ -3,7 +3,8 @@ import { ItemsPayload } from "../type/payload";
 
 
 export enum ItemQueryNames {
-  "items" = "items"
+  "items" = "items",
+  "categories" = "categories"
 }
 
 interface QueryHandler<Type> {

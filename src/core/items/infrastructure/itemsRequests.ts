@@ -145,7 +145,7 @@ export const ItemsRequestFactory = function (Notification) {
     //Add an item category
     addCategory: function (name, callback) {
       $http.post('/api/items/category/', { name: name, parent: '' })
-        .then(function (data) {
+        .then(function ({data}) {
           Notification.notifier({
             // message: Language.eng.items.category.add.success,
             type: 'success'
@@ -179,7 +179,7 @@ export const ItemsRequestFactory = function (Notification) {
     //Add an item form
     addForm: function (name, callback) {
       $http.post('/api/items/form/', { name: name })
-        .then(function (data) {
+        .then(function ({data}) {
           Notification.notifier({
             // message: Language.eng.items.form.add.success,
             type: 'success'
@@ -196,7 +196,7 @@ export const ItemsRequestFactory = function (Notification) {
     //Add an item packaging
     addPackaging: function (name, callback) {
       $http.post('/api/items/packaging/', { name: name, parent: '' })
-        .then(function (data) {
+        .then(function ({data}) {
           Notification.notifier({
             // message: Language.eng.items.packaging.add.success,
             type: 'success'
@@ -214,7 +214,7 @@ export const ItemsRequestFactory = function (Notification) {
     //List Categories
     listCategory: function (callback) {
       $http.get('/api/items/category')
-        .then(function (data) {
+        .then(function ({data}) {
           callback(data);
         })
         .catch(function () {
@@ -227,7 +227,7 @@ export const ItemsRequestFactory = function (Notification) {
     //List Forms
     listForm: function (callback) {
       $http.get('/api/items/form')
-        .then(function (data) {
+        .then(function ({data}) {
           callback(data);
         })
         .catch(function () {
@@ -254,8 +254,8 @@ export const ItemsRequestFactory = function (Notification) {
     //Prescription Record
     prdt: function (id, cb) {
       $http.get('/api/items/prescribe/' + id)
-        .then(function (d) {
-          cb(d);
+        .then(function ({data}) {
+          cb(data);
         })
         .catch(function () {
           Notification.notifier({
@@ -264,17 +264,6 @@ export const ItemsRequestFactory = function (Notification) {
           });
         });
     },
-
-    getByRegNo: function (query, cb) {
-      console.log(query);
-      $http.get('/api/nafdacdrugs/typeahead?q=' + encodeURI(query))
-        .then(function (d) {
-          cb(d);
-        })
-        .catch(function () {
-          alert('An Error Occurred, please check your request');
-        });
-    }
 
   }
 
