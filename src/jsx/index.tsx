@@ -2,12 +2,10 @@ import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import Home from "./components/dashboard/Home";
 
-import "../scss/index.css";
-import "../scss/chart.css";
-import "../scss/step.css";
 import { AddItemPage } from "./pages/Items/AddItem";
 import DefaultPageLayout from "./layouts/Default";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AppDefaultsProvider } from "../context/app/app-defaults";
 
 
 
@@ -36,8 +34,9 @@ function Page() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-
-        <DefaultPageLayout menuToggle={menuToggle} routes={routes} pagePath={pagePath}></DefaultPageLayout>
+        <AppDefaultsProvider>
+          <DefaultPageLayout menuToggle={menuToggle} routes={routes} pagePath={pagePath}></DefaultPageLayout>
+        </AppDefaultsProvider>
       </QueryClientProvider>
     </>
   );

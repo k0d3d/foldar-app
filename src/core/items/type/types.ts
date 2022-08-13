@@ -1,14 +1,15 @@
-import React from "react"
-
 export type AddItemForm = {
   suppliers: any
   itemName: string
   itemDescription: string
-  itemPrices: string[]
-  itemCategory: string[] 
+  itemPrices: number
+  itemCategory: TItemCategory[] 
   itemTags: string[]
   additionalData?: any
   invoiceNumber?: any
+  itemBoilingPoint?: number 
+  sellingPrice?: number 
+  itemPurchaseRate?: number
 }
 
 export type AddItemFormFields = keyof AddItemForm

@@ -10,6 +10,7 @@ import { isAuthenticated } from './store/selectors/AuthSelectors';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 import "./scss/main.scss";
+import "./scss/chatbox.scss";
 import "./scss/app.scss";
 import "./vendor/bootstrap-select/dist/css/bootstrap-select.min.css";
 import './vendor/datatables/css/dataTables.min.css';

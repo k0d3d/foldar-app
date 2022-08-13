@@ -2,8 +2,13 @@
 
 import React from 'react'
 import {FaEllipsisH} from 'react-icons/fa'
+import { AddItemForm } from '../../../core/items/type/types'
 
-function ItemCategory({form, removeItemCat, openCategoryDialog}) {
+function ItemCategory({form, removeItemCat, openCategoryDialog}: {
+  form: AddItemForm, 
+  removeItemCat: (index: number) => void, 
+  openCategoryDialog: () => void
+}) {
   return (
     <div className='mb-3'>
       <div className="lister form-label" >
@@ -11,10 +16,10 @@ function ItemCategory({form, removeItemCat, openCategoryDialog}) {
       </div>
       <ul className="fa-ul list-group list-group-flush" id="itemCategory" >
         {
-          form.itemCategory && form.itemCategory.map((itemCat: string, key: number) => (
+          form.itemCategory && form.itemCategory.map((itemCat, key: number) => (
             <li className='list-group-item d-flex justify-content-between align-items-center' key={key} onClick={() => removeItemCat(key)}>
               <span>
-                { itemCat }
+                { itemCat.categoryName }
               </span>
               <span className="text-sm">
                 tap to remove

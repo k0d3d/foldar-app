@@ -1,22 +1,46 @@
 import { Item } from "../domain/Item"
+import { TItemCategory } from "./types"
 
 
 export type ItemsPayload = {
   itemName: string
   itemDescription: string
   itemPrices: string[]
-  itemCategory: number | string | null
+  itemCategory: TItemCategory[]
   itemTags: string[]
   additionalData?: any
-  itemLowPoint?: number
-  inStock?: boolean
+  currentStock?: boolean
+  itemBoilingPoint?: number 
+  sellingPrice?: number 
+  itemPurchaseRate?: number
+} 
+
+
+
+export type ItemsSummaryPayload = {
+  itemName: string
+  itemCategory: TItemCategory[]
+  currentStock?: boolean
+  itemBoilingPoint?: number 
+
+} 
+
+export type ItemsSummaryPanePayload = {
+  itemName: string
+  itemDescription: string
+  itemCategory: TItemCategory[]
+  itemPurchaseRate?: number
+  additionalData?: any
+  currentStock?: boolean
+  itemBoilingPoint?: number 
+  lastSupplyDate: string
 } 
 
 export type AddItemPayload = {
   itemName: string
   itemDescription: string
-  itemPrices: string[]
-  itemCategory: string[]
+  itemPrices: number
+  itemCategory: TItemCategory[]
   itemTags: string[]
   additionalData?: any
   itemLowPoint?: number

@@ -1,5 +1,5 @@
 import axiosInstance from '../../auth/infrastructure/axiosInstance'
-import { AddItemPayload, ItemsPayload } from "../type/payload";
+import { AddItemPayload, ItemsPayload, ItemsSummaryPanePayload, ItemsSummaryPayload } from "../type/payload";
 
 
 export const ItemsRequestFactory = function (Notification) {
@@ -8,10 +8,17 @@ export const ItemsRequestFactory = function (Notification) {
 
   return {
 
-    items: async function () {
-      const {data} = await $http.get('/api/items/listAll')
+    items: async function ({skip, limit}) {
+      const searchParams = new URLSearchParams();
+      if (skip) {
+        searchParams.append('skip', skip)
+      }
+      if (limit) {
+        searchParams.append('limit', limit)
+      }
+      const {data} = await $http.get(`/api/items/listAll?${searchParams}`)
       if (data) {
-        return data as ItemsPayload[]
+        return data as ItemsSummaryPayload[]
       }
 
     },

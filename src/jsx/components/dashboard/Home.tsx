@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAppDefaults } from '../../../context/app/app-defaults'
+import { ItemsSummaryPanePayload } from '../../../core/items/type/payload'
 
 import { ReactComponent as InventoryBagImg } from '../../../images/svg/bag.svg'
 import SummaryNavigationPills from '../../../widgets/home/SummaryNav'
 import ItemsSummaryTable from '../../../widgets/items/ItemsSummaryTable'
+import ItemSummaryPane from '../dialog/item-summary-pane'
 import ListItemsTable from '../item/ListItemsTable'
 
 function Home() {
+
+  const {state, clearActiveSummary} = useAppDefaults()
+
+  const activeSummary = state.itemSummary as ItemsSummaryPanePayload
+
   return (
     <>
+      <ItemSummaryPane closeSummary={clearActiveSummary} summary={activeSummary}  />
       <div className="row">
         <div className="col-md-4">
           <div className="card">

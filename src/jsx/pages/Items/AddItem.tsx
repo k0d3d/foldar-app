@@ -19,8 +19,15 @@ export function AddItemPage() {
   const [catList, setCatList] = useState<TItemCategory[]>([])
 
   const [formValues, setFormValues] = useState<AddItemForm>({
+    itemName: "",
+    itemDescription: "",
+    itemPrices: 0,
+    itemTags: [],
+    suppliers: [],
+    additionalData: {},
+    invoiceNumber: "",
     itemCategory: []
-  } as unknown as AddItemForm)
+  }  as AddItemForm)
 
   useEffect(() => {
     itemsService.listCategory(function(categories){
@@ -37,7 +44,7 @@ export function AddItemPage() {
   };
 
   const handleFormSubmit = async (values: AddItemForm) => {
-    const addItemRequest = new UseAddItem(values);
+    const addItemRequest = new UseAddItem({...values, itemCategory: formValues.itemCategory});
     addItemRequest.createItem().catch((err) => handleFormError(err));
   };
 
@@ -63,7 +70,7 @@ export function AddItemPage() {
   //Add a category to the item's category list
   const addToItem = function(index){
     const category = catList[index];
-    const itemCategory = [...formValues.itemCategory, category.categoryName]
+    const itemCategory = [...formValues.itemCategory, category]
     setFormValues((exFormValues) => ({ ...exFormValues, itemCategory } ))
   };
 
@@ -111,7 +118,7 @@ export function AddItemPage() {
       extraClasses: "item-desc-input",
     },
     {
-      name: "itemPrices",
+      name: "sellingPrice",
       fieldType: "number",
       label: "Price",
       parentClasses: "col-md-6",

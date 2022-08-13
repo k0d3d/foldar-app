@@ -1,10 +1,12 @@
-import { ItemsPayload } from '../../../core/items/type/payload'
+import { ItemsActionType } from '../../../context/app/action-constants'
+import { ItemsPayload, ItemsSummaryPanePayload, ItemsSummaryPayload } from '../../../core/items/type/payload'
 
 type ListItemsTableProps = {
-  items: ItemsPayload[]
+  items: ItemsPayload[] | ItemsSummaryPayload[],
+  setActiveSummary: React.Dispatch<ItemsActionType>
 }
 
-function ListItemsTable({ items }: ListItemsTableProps) {
+function ListItemsTable({ items, setActiveSummary }: ListItemsTableProps) {
 
 
   return (
@@ -20,10 +22,8 @@ function ListItemsTable({ items }: ListItemsTableProps) {
                 <tr>
                   <th scope="col">Name</th>
                   <th scope="col">Category</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">In Stock</th>
+                  <th scope="col">Stock Count</th>
                   <th scope="col">Status</th>
-                  <th scope="col"></th>
                   <th scope="col" />
                 </tr>
               </thead>
@@ -33,20 +33,21 @@ function ListItemsTable({ items }: ListItemsTableProps) {
                     items.map((item, key) => (
                       <tr key={key}>
                         <td>{ item.itemName }</td>
-                        <td>{ item.itemCategory }</td>
-                        <td>{ item.itemPrices && item.itemPrices[0] }</td>
-                        <td>{ item.inStock}</td>
+                        <td>
+                          { item.itemCategory.length > 1 && `${item.itemCategory.length} categories`  }
+                          { item.itemCategory && item.itemCategory.length > 0 &&  item.itemCategory[0].categoryName  }
+                        </td>
+                        <td>{ item.currentStock}</td>
                         <td>
                           <span className="badge badge-rounded badge-primary">
                             InStock
                           </span>
                         </td>
-                        <td></td>
                         <td>
                           <div className="dropdown custom-dropdown mb-0">
-                            <div
-                              className="btn sharp btn-primary tp-btn"
-                              data-bs-toggle="dropdown"
+                            <button
+                              className="btn sharp btn-success tp-btn"
+                              onClick={() => setActiveSummary(item)}
                             >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +69,7 @@ function ListItemsTable({ items }: ListItemsTableProps) {
                                   <circle fill="#000000" cx={12} cy={19} r={2} />
                                 </g>
                               </svg>
-                            </div>
+                            </button>
                           </div>
                         </td>
                       </tr>
