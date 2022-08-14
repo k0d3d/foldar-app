@@ -1,41 +1,26 @@
-import React, { useEffect, useState } from "react";
 import { UseAddItem } from "../../../core/items/usecases/add-item";
 import { CreateAddItemForm } from "../../../widgets/CreatePage";
 // import { CreateAddItemForm } from "../../../scripts/items/CreateAddItemForm";
 import {
   TAddItemForm,
-  TItemFormFieldArgs,
-  TItemCategory,
 } from "../../../core/items/type/types";
-import ItemCategory from "../../components/item/ItemCategory";
 import SelectCategoryDialog from "../../components/dialog/select-category";
-import ItemService from "../../../core/items/infrastructure/itemService";
-import useItemQueries, { ItemQueryNames } from "../../../core/items/queries/queries";
+import useItemCategory from "../../../core/items/hooks/item-category";
+import { formFields } from "../../../widgets/items/itemFormFields";
 
 export function AddItemPage() {
-  const [categoryDialogVisibility, setCategoryDialogVisibility] =
-    useState(false);
-  
-  const [catList, setCatList] = useState<TItemCategory[]>([])
 
-  const [formValues, setFormValues] = useState<TAddItemForm>({
-    itemName: "",
-    itemDescription: "",
-    itemPrices: 0,
-    itemTags: [],
-    suppliers: [],
-    additionalData: {},
-    invoiceNumber: "",
-    itemCategory: []
-  }  as TAddItemForm)
-
-  useEffect(() => {
-    itemsService.listCategory(function(categories){
-      // eslint-disable-next-line no-debugger
-      // debugger
-      setCatList(categories)
-    });
-  }, [])
+  const {
+    addCat,
+    addToItem,
+    openCategoryDialog,
+    removeCat,
+    removeItemCat,
+    formValues,
+    catList,
+    categoryDialogVisibility,
+    setCategoryDialogVisibility
+  } = useItemCategory()
 
   // const {} = useItemQueries({ queryName: ItemQueryNames.categories,  handler: request.listItems.bind(request) })
 
@@ -48,36 +33,7 @@ export function AddItemPage() {
     addItemRequest.createItem().catch((err) => handleFormError(err));
   };
 
-  const itemsService = ItemService()
 
-  //Add Category
-  const addCat = function(catInput){
-    if(catInput.length > 0){
-      itemsService.addCategory(catInput, function(r){
-        setCatList(exList => ([...exList, r]))
-      });
-    }
-  };
-
-  //Remove/Delete a Category
-  const removeCat = function(index){
-    itemsService.delCategory(catList[index]._id, function(){
-      const newCatList = catList.filter((cat, pos) => pos !== index );
-      setCatList(newCatList)
-    });
-  };
-
-  //Add a category to the item's category list
-  const addToItem = function(index){
-    const category = catList[index];
-    const itemCategory = [...formValues.itemCategory, category]
-    setFormValues((exFormValues) => ({ ...exFormValues, itemCategory } ))
-  };
-
-  const removeItemCat = function(index){
-    const newCategoryList = formValues.itemCategory.filter((_, pos) => pos !== index );
-    setFormValues(exForm => ({...exForm, itemCategory: newCategoryList}))
-  };
 
   //Remove Supplier From List
   // const removeItemSup = function(index){
@@ -90,45 +46,6 @@ export function AddItemPage() {
   //   });
   // };
 
-  const openCategoryDialog = () =>
-    setCategoryDialogVisibility(!categoryDialogVisibility);
-
-  const formFields: TItemFormFieldArgs = [
-    {
-      name: "itemName",
-      label: "Name",
-    },
-    {
-      name: "itemCategory",
-      label: "Category",
-      parentClasses: "col-md-6",
-      CustomComponent: (props) => (
-        <ItemCategory
-          openCategoryDialog={openCategoryDialog}
-          form={formValues}
-          removeItemCat={removeItemCat}
-          {...props}
-        />
-      ),
-    },
-    {
-      name: "itemDescription",
-      fieldTag: "textarea",
-      label: "Description",
-      extraClasses: "item-desc-input",
-    },
-    {
-      name: "sellingPrice",
-      fieldType: "number",
-      label: "Price",
-      parentClasses: "col-md-6",
-    },
-    {
-      name: "itemTags",
-      fieldTag: "textarea",
-      label: "Tags",
-    },
-  ];
 
   return (
     <>
@@ -151,7 +68,7 @@ export function AddItemPage() {
                 <CreateAddItemForm
                   handleFormSubmit={handleFormSubmit}
                   formName="add-item-form"
-                  formFields={formFields}
+                  formFields={formFields({formValues, openCategoryDialog, removeItemCat})}
                   formValues={formValues}
                 />
               </div>

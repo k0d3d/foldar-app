@@ -1,5 +1,5 @@
 import axiosInstance from '../../auth/infrastructure/axiosInstance'
-import { AddItemPayload, ItemsPayload, ItemsSummaryPanePayload, ItemsSummaryPayload } from "../type/payload";
+import { AddItemPayload, ItemsSummaryPayload } from "../type/payload";
 
 
 export const ItemsRequestFactory = function (Notification) {

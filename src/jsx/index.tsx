@@ -6,6 +6,7 @@ import { AddItemPage } from "./pages/Items/AddItem";
 import DefaultPageLayout from "./layouts/Default";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppDefaultsProvider } from "../context/app/app-defaults";
+import { EditItemPage } from "./pages/Items/EditItem";
 
 
 
@@ -22,6 +23,10 @@ function Page() {
     {
       url: "add-item",
       component: AddItemPage(),
+    },
+    {
+      url: "edit-item/:itemId",
+      component: EditItemPage(),
     },
   ];
 

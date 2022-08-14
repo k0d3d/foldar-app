@@ -26,6 +26,7 @@ export type ItemsSummaryPayload = {
 } 
 
 export type ItemsSummaryPanePayload = {
+  _id: any
   itemName: string
   itemDescription: string
   itemCategory: TItemCategory[]

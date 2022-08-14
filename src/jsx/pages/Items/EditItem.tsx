@@ -1,16 +1,10 @@
-import React, { useEffect, useState } from "react";
 import { UseAddItem } from "../../../core/items/usecases/add-item";
 import { CreateAddItemForm } from "../../../widgets/CreatePage";
 // import { CreateAddItemForm } from "../../../scripts/items/CreateAddItemForm";
 import {
   TAddItemForm,
-  TItemFormFieldArgs,
-  TItemCategory,
 } from "../../../core/items/type/types";
-import ItemCategory from "../../components/item/ItemCategory";
 import SelectCategoryDialog from "../../components/dialog/select-category";
-import ItemService from "../../../core/items/infrastructure/itemService";
-import useItemQueries, { ItemQueryNames } from "../../../core/items/queries/queries";
 import { formFields } from "../../../widgets/items/itemFormFields";
 import useItemCategory from "../../../core/items/hooks/item-category";
 

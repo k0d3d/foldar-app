@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { ItemsSummaryPanePayload } from '../../../core/items/type/payload'
 
 function ItemSummaryPane({ summary, closeSummary }: { summary: ItemsSummaryPanePayload | null, closeSummary: () => void }) {
@@ -30,7 +31,7 @@ function ItemSummaryPane({ summary, closeSummary }: { summary: ItemsSummaryPaneP
               </div>
             </div>
             <div className="summary-actions">
-              <p><a className="btn btn-sm btn-block btn-warning" ui-sref="items.edit({itemId: summary._id,action: 'iv-edit'})">Edit Item</a></p>
+              <p><Link to={`/edit-item/${summary._id}`} className="btn btn-sm btn-block btn-warning" >Edit Item</Link></p>
               <p><a className="btn btn-sm btn-block btn-warning" ui-sref="items.summary.quickorder">Add to cart</a></p>
               <p><a className="btn btn-sm btn-block btn-warning" ui-sref="items.summary.stockhistory">Stock History</a></p>
               <p><a className="btn btn-sm btn-block btn-danger" data-ng-click="delConfirm = !delConfirm; delBtnText = 'Are you sure ?'">Delete</a>
