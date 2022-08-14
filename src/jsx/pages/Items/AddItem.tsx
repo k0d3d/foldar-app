@@ -3,8 +3,8 @@ import { UseAddItem } from "../../../core/items/usecases/add-item";
 import { CreateAddItemForm } from "../../../widgets/CreatePage";
 // import { CreateAddItemForm } from "../../../scripts/items/CreateAddItemForm";
 import {
-  AddItemForm,
-  AddItemFormFieldArgs,
+  TAddItemForm,
+  TItemFormFieldArgs,
   TItemCategory,
 } from "../../../core/items/type/types";
 import ItemCategory from "../../components/item/ItemCategory";
@@ -18,7 +18,7 @@ export function AddItemPage() {
   
   const [catList, setCatList] = useState<TItemCategory[]>([])
 
-  const [formValues, setFormValues] = useState<AddItemForm>({
+  const [formValues, setFormValues] = useState<TAddItemForm>({
     itemName: "",
     itemDescription: "",
     itemPrices: 0,
@@ -27,7 +27,7 @@ export function AddItemPage() {
     additionalData: {},
     invoiceNumber: "",
     itemCategory: []
-  }  as AddItemForm)
+  }  as TAddItemForm)
 
   useEffect(() => {
     itemsService.listCategory(function(categories){
@@ -43,7 +43,7 @@ export function AddItemPage() {
     console.log(err);
   };
 
-  const handleFormSubmit = async (values: AddItemForm) => {
+  const handleFormSubmit = async (values: TAddItemForm) => {
     const addItemRequest = new UseAddItem({...values, itemCategory: formValues.itemCategory});
     addItemRequest.createItem().catch((err) => handleFormError(err));
   };
@@ -93,7 +93,7 @@ export function AddItemPage() {
   const openCategoryDialog = () =>
     setCategoryDialogVisibility(!categoryDialogVisibility);
 
-  const formFields: AddItemFormFieldArgs = [
+  const formFields: TItemFormFieldArgs = [
     {
       name: "itemName",
       label: "Name",

@@ -1,19 +1,19 @@
 import React from 'react';
 import { Field, Form, Formik } from 'formik';
-import { AddItemFormFieldArgs, AddItemForm } from '../../core/items/type/types';
+import { TItemFormFieldArgs, TAddItemForm } from '../../core/items/type/types';
 import * as Yup from 'yup'
 
 
 
 export type CreateAddItemPageArgs = {
-  formFields: AddItemFormFieldArgs
+  formFields: TItemFormFieldArgs
   formName: string,
-  handleFormSubmit: (value: AddItemForm) => Promise<any>,
-  formValues: AddItemForm,
+  handleFormSubmit: (value: TAddItemForm) => Promise<any>,
+  formValues: TAddItemForm,
 
 }
 
-const AddItemSchema: Yup.SchemaOf<AddItemForm> = Yup.object({
+const AddItemSchema: Yup.SchemaOf<TAddItemForm> = Yup.object({
   itemName: Yup.string().required(),
   itemDescription: Yup.string().required(),
   additionalData: Yup.object({}),

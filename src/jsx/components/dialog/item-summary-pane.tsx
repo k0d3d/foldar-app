@@ -11,19 +11,19 @@ function ItemSummaryPane({ summary, closeSummary }: { summary: ItemsSummaryPaneP
               <div className="card-body">
                 <form>
                   <div className="form-group fg-line">
-                    <label htmlFor="exampleInputEmail1">Name</label>
+                    <label>Name</label>
                     <p className="form-control-plaintext input-sm"> {summary.itemName}</p>
                   </div>
                   <div className="form-group fg-line">
-                    <label htmlFor="exampleInputEmail1">Current Stock</label>
+                    <label>Current Stock</label>
                     <p className="form-control-plaintext input-sm">{summary.currentStock || 'Empty'}</p>
                   </div>
                   <div className="form-group fg-line">
-                    <label htmlFor="exampleInputEmail1">Last Order Date</label>
+                    <label>Last Order Date</label>
                     <p className="form-control-plaintext input-sm">{summary.lastSupplyDate}</p>
                   </div>
                   <div className="form-group fg-line">
-                    <label htmlFor="exampleInputEmail1">Purchase Rate</label>
+                    <label>Purchase Rate</label>
                     <p className="form-control-plaintext input-sm">{summary.itemPurchaseRate || 0}</p>
                   </div>
                 </form>

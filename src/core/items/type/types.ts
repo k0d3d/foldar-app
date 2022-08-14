@@ -1,4 +1,4 @@
-export type AddItemForm = {
+export type TAddItemForm = {
   suppliers: any
   itemName: string
   itemDescription: string
@@ -12,10 +12,10 @@ export type AddItemForm = {
   itemPurchaseRate?: number
 }
 
-export type AddItemFormFields = keyof AddItemForm
+export type AddItemFormFields = keyof TAddItemForm
 
 
-export type AddItemFormFieldArgs = {
+export type TItemFormFieldArgs = {
   label: string 
   placeholder?: string 
   name: Partial<AddItemFormFields>, 
