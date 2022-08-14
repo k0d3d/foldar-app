@@ -59,9 +59,18 @@ export const ItemsRequestFactory = function (Notification) {
     },
 
 
-    summary: function (id, locationId, callback) {
-      $http.get('/api/items/' + encodeURI(id) + '/options/quick/locations/' + encodeURI(locationId)).then(callback);
+    fetchItemSummary: async function (id, locationId) {
+      const {data} = await $http.get('/api/items/' + encodeURI(id) + '/locations/' + encodeURI(locationId))
+      return data
     },
+
+
+    //Fetches fields data for an Item
+    fetchItem: async function (itemId) {
+      const {data} = await $http.get('/api/items/' + encodeURI(itemId) + '/edit');
+      return data
+    },
+
 
     save: async function (post: AddItemPayload) {
       const success = await $http.post('/api/items', { item: post })
@@ -113,11 +122,6 @@ export const ItemsRequestFactory = function (Notification) {
         });
     },
 
-
-    //Fetches fields data for an Item
-    getItemFields: function (itemId, callback) {
-      $http.get('/api/items/' + encodeURI(itemId) + '/edit').then(callback);
-    },
 
     //Fetches fields data for an Item
     getDSProductFields: function (itemId, callback) {

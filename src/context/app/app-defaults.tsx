@@ -26,7 +26,8 @@ function AppDefaultsProvider({children}) {
   //   getAllProductCategories()
   // }, [])
 
-  const setActiveSummary = (payload) => {
+  const setActiveSummary = async (payload) => {
+    
     dispatch({
       type: "SET_ACTIVE_ITEM_SUMMARY",
       payload
