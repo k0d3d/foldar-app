@@ -1,26 +1,29 @@
 import { useEffect, useState } from "react";
 import ItemService from "../infrastructure/itemService";
-import { TAddItemForm, TItemCategory } from "../type/types";
+import { TItemForm, TItemCategory } from "../type/types";
 
 const itemsService = ItemService()
 
 
-export default function useItemCategory() {
+export default function useItemCategory(initialFormData?) {
   const [categoryDialogVisibility, setCategoryDialogVisibility] =
     useState(false);
 
   const [catList, setCatList] = useState<TItemCategory[]>([])
 
-  const [formValues, setFormValues] = useState<TAddItemForm>({
+  const [formValues, setFormValues] = useState<TItemForm>({
     itemName: "",
     itemDescription: "",
-    itemPrices: 0,
-    itemTags: [],
+    itemTags: "",
     suppliers: [],
     additionalData: {},
     invoiceNumber: "",
-    itemCategory: []
-  } as TAddItemForm)
+    itemCategory: [],
+    sellingPrice: 0,
+    itemPurchaseRate: 0,
+    itemBoilingPoint: 0,
+    
+  } as TItemForm)
 
   useEffect(() => {
     itemsService.listCategory(function(categories){
@@ -29,6 +32,10 @@ export default function useItemCategory() {
       setCatList(categories)
     });
   }, [])
+
+  useEffect(() => {
+    setFormValues({ ...formValues, ...initialFormData})
+  }, [initialFormData])
 
   //Add Category
   const addCat = function(catInput){

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
-import { ItemsPayload, ItemsSummaryPanePayload, ItemsSummaryPayload } from "../type/payload";
 
 
 export enum ItemQueryNames {
+  "item" = "item",
   "items" = "items",
   "categories" = "categories",
   "quicklist" = "quicklist",
@@ -19,7 +19,7 @@ type UseQueryProps<T> = {
 }
 
 
-export default function useItemQueries({ handler, queryName }: UseQueryProps<ItemsSummaryPanePayload[] | ItemsSummaryPayload[]>) {
+export default function useItemQueries<T>({ handler, queryName }: UseQueryProps<T>) {
   // Access the client
   // const queryClient = useQueryClient()
   // eslint-disable-next-line no-debugger

@@ -7,6 +7,7 @@ import DefaultPageLayout from "./layouts/Default";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppDefaultsProvider } from "../context/app/app-defaults";
 import { EditItemPage } from "./pages/Items/EditItem";
+import { Routes, Route } from "react-router-dom";
 
 
 
@@ -22,11 +23,11 @@ function Page() {
     { url: "dashboard", component: <Home /> },
     {
       url: "add-item",
-      component: AddItemPage(),
+      component: <AddItemPage />,
     },
     {
       url: "edit-item/:itemId",
-      component: EditItemPage(),
+      component: <EditItemPage />,
     },
   ];
 
@@ -36,15 +37,24 @@ function Page() {
 
   const pagePath = pathname.split("-").includes("page");
 
+  const AppRoutes = (props) => {
+
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <AppDefaultsProvider>
-          <DefaultPageLayout menuToggle={menuToggle} routes={routes} pagePath={pagePath}></DefaultPageLayout>
-        </AppDefaultsProvider>
-      </QueryClientProvider>
-    </>
-  );
+    <QueryClientProvider client={queryClient}>
+      <Routes>
+        {props.routes.map((data, i) => <Route key={i} path={`/${data.url}`} element={data.component} />)}
+      </Routes>
+    </QueryClientProvider>
+  )
+}
+
+return (
+  <>
+      <AppDefaultsProvider>
+        <DefaultPageLayout menuToggle={menuToggle} routes={<AppRoutes routes={routes} />} pagePath={pagePath}></DefaultPageLayout>
+      </AppDefaultsProvider>
+  </>
+);
 }
 
 export default Page;

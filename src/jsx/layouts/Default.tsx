@@ -11,9 +11,7 @@ function DefaultPageLayout(props) {
         <div className={`${!props.pagePath ? "container-fluid" : ""}`} style={{
           minHeight: "60vh"
         }}>
-          <Routes>
-            {props.routes.map((data, i) => <Route key={i} path={`/${data.url}`} element={data.component} />)}
-          </Routes>
+          {props.routes}
         </div>
       </div>
       <Footer />

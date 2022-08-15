@@ -67,7 +67,7 @@ export const ItemsRequestFactory = function (Notification) {
 
     //Fetches fields data for an Item
     fetchItem: async function (itemId) {
-      const {data} = await $http.get('/api/items/' + encodeURI(itemId) + '/edit');
+      const {data} = await $http.get('/api/items/' + encodeURI(itemId) );
       return data
     },
 
@@ -130,21 +130,9 @@ export const ItemsRequestFactory = function (Notification) {
 
 
     //Post updated item fields
-    update: function (form, callback) {
-      $http.put('/api/items/' + form._id + '/edit', form)
-        .then(function () {
-          Notification.notifier({
-            // message: Language.eng.items.update.success,
-            type: 'success'
-          });
-          callback(true);
-        })
-        .catch(function () {
-          Notification.notifier({
-            // message: Language.eng.items.update.error,
-            type: 'error'
-          });
-        });
+    update: async function (itemId, form) {
+      const {data} = await $http.put(`/api/items/${itemId}/edit`, form)
+      return data
     },
 
     //Delete Item

@@ -2,7 +2,7 @@ import { UseAddItem } from "../../../core/items/usecases/add-item";
 import { CreateAddItemForm } from "../../../widgets/CreatePage";
 // import { CreateAddItemForm } from "../../../scripts/items/CreateAddItemForm";
 import {
-  TAddItemForm,
+  TItemForm,
 } from "../../../core/items/type/types";
 import SelectCategoryDialog from "../../components/dialog/select-category";
 import useItemCategory from "../../../core/items/hooks/item-category";
@@ -28,7 +28,7 @@ export function AddItemPage() {
     console.log(err);
   };
 
-  const handleFormSubmit = async (values: TAddItemForm) => {
+  const handleFormSubmit = async (values: TItemForm) => {
     const addItemRequest = new UseAddItem({...values, itemCategory: formValues.itemCategory});
     addItemRequest.createItem().catch((err) => handleFormError(err));
   };
@@ -66,6 +66,7 @@ export function AddItemPage() {
             <div className="card-body">
               <div className="basic-form">
                 <CreateAddItemForm
+                  title={`Add new Item`}
                   handleFormSubmit={handleFormSubmit}
                   formName="add-item-form"
                   formFields={formFields({formValues, openCategoryDialog, removeItemCat})}

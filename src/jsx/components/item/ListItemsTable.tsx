@@ -35,7 +35,7 @@ function ListItemsTable({ items, setActiveSummary }: ListItemsTableProps) {
                         <td>{ item.itemName }</td>
                         <td>
                           { item.itemCategory.length > 1 && `${item.itemCategory.length} categories`  }
-                          { item.itemCategory && item.itemCategory.length > 0 &&  item.itemCategory[0].categoryName  }
+                          { item.itemCategory && item.itemCategory.length === 1 &&  item.itemCategory[0].categoryName  }
                         </td>
                         <td>{ item.currentStock}</td>
                         <td>

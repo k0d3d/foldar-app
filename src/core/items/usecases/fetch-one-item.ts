@@ -1,7 +1,7 @@
 
 
 import { ItemsRequestFactory } from "../infrastructure/itemsRequests"
-import { AddItemPayload } from "../type/payload"
+import { ItemsPayload, ItemsSummaryPayload } from "../type/payload"
 
 import { AppLanguage } from "../../lang"
 import { CreateEventHandler } from "../../notification/handler"
@@ -25,36 +25,26 @@ export class UseFetchOneItem{
   async fetchOneItem(){
     // calls the save on
     // eslint-disable-next-line no-debugger
-    const saveRequest = await this.request.fetchItem(this.itemId).catch(() => {
+    const oneItem = await this.request.fetchItem(this.itemId).catch(() => {
       const appHasError = new AppError(this.Language.items.list.fetch.error)
       appHasError.showError()
     })
-    if (saveRequest) {
-      this.Notification.notifier(
-        {
-          message: this.Language.items.list.fetch.success,
-          notificationType: 'success',
-          heading: this.Language.items.list.fetch.heading
-        }
-      );
+
+    if (oneItem) {
+      return oneItem as ItemsPayload
     }
+
   }
 
   async fetchOneItemSummary(){
     // calls the save on
     // eslint-disable-next-line no-debugger
-    const saveRequest = await this.request.fetchItemSummary(this.itemId, this.locationId).catch(() => {
+    const oneItemSummary = await this.request.fetchItemSummary(this.itemId, this.locationId).catch(() => {
       const appHasError = new AppError(this.Language.items.list.fetch.error)
       appHasError.showError()
     })
-    if (saveRequest) {
-      this.Notification.notifier(
-        {
-          message: this.Language.items.list.fetch.success,
-          notificationType: 'success',
-          heading: this.Language.items.list.fetch.heading
-        }
-      );
+    if (oneItemSummary) {
+      return oneItemSummary as ItemsSummaryPayload
     }
   }
 }

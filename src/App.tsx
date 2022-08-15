@@ -1,9 +1,9 @@
-import React, { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 
 /// Components
 import Index from "./jsx";
 import { connect } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Routes } from 'react-router-dom';
 // action
 import { isAuthenticated } from './store/selectors/AuthSelectors';
 /// Style

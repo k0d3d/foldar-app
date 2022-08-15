@@ -5,7 +5,6 @@ import { TItemCategory } from "./types"
 export type ItemsPayload = {
   itemName: string
   itemDescription: string
-  itemPrices: string[]
   itemCategory: TItemCategory[]
   itemTags: string[]
   additionalData?: any
@@ -13,6 +12,8 @@ export type ItemsPayload = {
   itemBoilingPoint?: number 
   sellingPrice?: number 
   itemPurchaseRate?: number
+  itemPrices?: number
+  _id: string
 } 
 
 
@@ -40,9 +41,9 @@ export type ItemsSummaryPanePayload = {
 export type AddItemPayload = {
   itemName: string
   itemDescription: string
-  itemPrices: number
+  itemPrices?: number
   itemCategory: TItemCategory[]
-  itemTags: string[]
+  itemTags?: string
   additionalData?: any
   itemLowPoint?: number
   orderInvoiceNumber?: string

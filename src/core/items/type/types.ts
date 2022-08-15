@@ -1,18 +1,18 @@
-export type TAddItemForm = {
-  suppliers: any
+export type TItemForm = {
   itemName: string
   itemDescription: string
-  itemPrices: number
+  itemPrices?: number
   itemCategory: TItemCategory[] 
-  itemTags: string[]
+  itemTags?: string
   additionalData?: any
   invoiceNumber?: any
   itemBoilingPoint?: number 
   sellingPrice?: number 
   itemPurchaseRate?: number
+  suppliers?: any
 }
 
-export type AddItemFormFields = keyof TAddItemForm
+export type AddItemFormFields = keyof TItemForm
 
 
 export type TItemFormFieldArgs = {

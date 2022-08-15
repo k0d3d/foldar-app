@@ -2,10 +2,10 @@
 
 import React from 'react'
 import {FaEllipsisH} from 'react-icons/fa'
-import { TAddItemForm } from '../../../core/items/type/types'
+import { TItemForm } from '../../../core/items/type/types'
 
 function ItemCategory({form, removeItemCat, openCategoryDialog}: {
-  form: TAddItemForm, 
+  form: TItemForm, 
   removeItemCat: (index: number) => void, 
   openCategoryDialog: () => void
 }) {
