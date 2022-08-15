@@ -1,16 +1,13 @@
 import * as React from 'react'
 import { useMemo } from 'react'
-import { ItemsSummaryPanePayload } from '../../core/items/type/payload'
 import { appReducer } from './appReducer'
+import { TItemSummaryState, TPendingCartState } from './TPendingCartState'
 
 
-
-
-
-type TItemSummaryState = ItemsSummaryPanePayload | null
 
 export const State = {
   itemSummary: null as TItemSummaryState,
+  pendingCartItem: null as TPendingCartState,
   errors: null,
   isLoading: false
 }
@@ -19,12 +16,6 @@ const AppDefaultsContext = React.createContext<any>(undefined)
 
 function AppDefaultsProvider({children}) {
   const [state, dispatch] = React.useReducer(appReducer, State)
-  // const [activeSummary, setActiveSummary] = useState<ItemsSummaryPanePayload | null>(null)
-
-
-  // React.useEffect(() => {
-  //   getAllProductCategories()
-  // }, [])
 
   const setActiveSummary = async (payload) => {
     
@@ -40,6 +31,19 @@ function AppDefaultsProvider({children}) {
     })
   }
 
+  const setQuickOrderItem = async (payload) => {
+    dispatch({
+      type: "SET_QUICK_ORDER_ITEM_SUMMARY",
+      payload
+    })
+  }
+
+  const clearQuickOrderItem = () => {
+    dispatch({
+      type: "CLEAR_QUICK_ORDER_ITEM_SUMMARY"
+    })
+  }
+
 
 
 
@@ -47,9 +51,9 @@ function AppDefaultsProvider({children}) {
   // Learn more in http://kcd.im/optimize-context
   const value =  useMemo(() =>  (
     {
-      state, dispatch, setActiveSummary, clearActiveSummary
+      state, dispatch, setActiveSummary, clearActiveSummary, setQuickOrderItem, clearQuickOrderItem
     }
-  ), [state, dispatch, setActiveSummary, clearActiveSummary])
+  ), [state, dispatch, setActiveSummary, clearActiveSummary, setQuickOrderItem, clearQuickOrderItem])
 
   return <AppDefaultsContext.Provider value={value}>{children}</AppDefaultsContext.Provider>
 }

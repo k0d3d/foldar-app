@@ -1,4 +1,5 @@
 @import "toastr/toastr";
+@import "./custom-animation";
 
 // @import "chatbox";
 
@@ -21,13 +22,28 @@
   font-size: 11px;
 }
 
-.chatbox{
+.chatbox {
+  transition: all 0.6s;
   label {
     color: darkgrey;
     margin: 0;
   }
-  p{
-    color: black; 
+  p {
+    color: black;
     padding-top: 0;
   }
+}
+
+.chatbox.active.has-quick-order {
+  right: 19em;
+}
+
+.swing-in-left-fwd {
+  -webkit-animation: swing-in-left-fwd 0.5s
+    cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  animation: swing-in-left-fwd 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+.swing-in-right-fwd {
+	-webkit-animation: swing-in-right-fwd 0.8s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+	        animation: swing-in-right-fwd 0.8s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
 }

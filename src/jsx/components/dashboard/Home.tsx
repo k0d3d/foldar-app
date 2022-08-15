@@ -1,23 +1,25 @@
-import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppDefaults } from '../../../context/app/app-defaults'
+import { TPendingCartState } from '../../../context/app/TPendingCartState'
 import { ItemsSummaryPanePayload } from '../../../core/items/type/payload'
 
 import { ReactComponent as InventoryBagImg } from '../../../images/svg/bag.svg'
 import SummaryNavigationPills from '../../../widgets/home/SummaryNav'
 import ItemsSummaryTable from '../../../widgets/items/ItemsSummaryTable'
 import ItemSummaryPane from '../dialog/item-summary-pane'
-import ListItemsTable from '../item/ListItemsTable'
+import QuickOrderPane from '../dialog/quick-order-pane'
 
 function Home() {
 
-  const {state, clearActiveSummary} = useAppDefaults()
+  const {state, clearActiveSummary, setQuickOrderItem, clearQuickOrderItem} = useAppDefaults()
 
   const activeSummary = state.itemSummary as ItemsSummaryPanePayload
+  const quickOrder = state.pendingCartItem as TPendingCartState
 
   return (
     <>
-      <ItemSummaryPane closeSummary={clearActiveSummary} summary={activeSummary}  />
+      <ItemSummaryPane openQuickOrderPane={setQuickOrderItem} quickOrder={quickOrder}  closeSummary={clearActiveSummary} summary={activeSummary}  />
+      <QuickOrderPane closeQuickOrder={clearQuickOrderItem} quickOrder={quickOrder} summary={activeSummary} />
       <div className="row">
         <div className="col-md-4">
           <div className="card">
