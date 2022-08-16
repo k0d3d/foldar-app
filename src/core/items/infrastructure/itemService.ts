@@ -1,10 +1,10 @@
 import { CreateEventHandler } from "../../notification/handler";
-import { ItemsRequestFactory } from "./itemsRequests";
+import { itemsRequestFactory } from "./itemsRequest";
 
 
-export default function ItemService() {
+export default function itemService() {
   const Notification = CreateEventHandler()
-  const { addCategory, addForm, delCategory, update, listCategory } = ItemsRequestFactory(Notification)
+  const { addCategory, addForm, delCategory, update, listCategory } = itemsRequestFactory(Notification)
 
   return {
     addCategory, addForm, delCategory, update, listCategory

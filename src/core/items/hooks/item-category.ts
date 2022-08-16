@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import ItemService from "../infrastructure/itemService";
+import itemService from "../infrastructure/itemService";
 import { TItemForm, TItemCategory } from "../type/types";
 
-const itemsService = ItemService()
+const itemsService = itemService()
 
 
 export default function useItemCategory(initialFormData?) {

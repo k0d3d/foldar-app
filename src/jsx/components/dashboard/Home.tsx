@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useAppDefaults } from '../../../context/app/app-defaults'
+import { useAppRoot } from '../../../context/app/app-root'
 import { TPendingCartState } from '../../../context/app/TPendingCartState'
 import { ItemsSummaryPanePayload } from '../../../core/items/type/payload'
 
@@ -11,10 +11,10 @@ import QuickOrderPane from '../dialog/quick-order-pane'
 
 function Home() {
 
-  const {state, clearActiveSummary, setQuickOrderItem, clearQuickOrderItem} = useAppDefaults()
-
+  const {state, dashboard} = useAppRoot()
+  const { clearActiveSummary, setQuickOrderItem, clearQuickOrderItem } = dashboard
   const activeSummary = state.itemSummary as ItemsSummaryPanePayload
-  const quickOrder = state.pendingCartItem as TPendingCartState
+  const quickOrder = state.quickCartItem as TPendingCartState
 
   return (
     <>

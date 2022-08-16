@@ -1,6 +1,6 @@
 
 
-import { ItemsRequestFactory } from "../infrastructure/itemsRequests"
+import { itemsRequestFactory } from "../infrastructure/itemsRequest"
 
 import { AppLanguage } from "../../lang"
 import { CreateEventHandler } from "../../notification/handler"
@@ -10,7 +10,7 @@ import { TItemForm } from "../type/types"
 
 
 export class UseUpdateOneItem{
-  private request: ReturnType<typeof ItemsRequestFactory>
+  private request: ReturnType<typeof itemsRequestFactory>
   private Notification: ReturnType<typeof CreateEventHandler>
   private Language: ReturnType<typeof AppLanguage>
 
@@ -18,7 +18,7 @@ export class UseUpdateOneItem{
   constructor(
     private item: TItemForm
   ){
-    this.request = ItemsRequestFactory({})
+    this.request = itemsRequestFactory({})
     this.Notification = CreateEventHandler()
     this.Language = AppLanguage()
 

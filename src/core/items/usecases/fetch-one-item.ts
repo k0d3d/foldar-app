@@ -1,6 +1,6 @@
 
 
-import { ItemsRequestFactory } from "../infrastructure/itemsRequests"
+import { itemsRequestFactory } from "../infrastructure/itemsRequest"
 import { ItemsPayload, ItemsSummaryPayload } from "../type/payload"
 
 import { AppLanguage } from "../../lang"
@@ -10,13 +10,13 @@ import { AppError } from "../../error/error"
 
 
 export class UseFetchOneItem{
-  private request: ReturnType<typeof ItemsRequestFactory>
+  private request: ReturnType<typeof itemsRequestFactory>
   private Notification: ReturnType<typeof CreateEventHandler>
   private Language: ReturnType<typeof AppLanguage>
   private locationId: string
   
   constructor(private itemId: string){
-    this.request = ItemsRequestFactory({})
+    this.request = itemsRequestFactory({})
     this.Notification = CreateEventHandler()
     this.Language = AppLanguage()
     this.locationId = ""

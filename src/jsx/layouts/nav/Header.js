@@ -1,5 +1,6 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
+import QuickCartWidget from "../../../widgets/cart/quick-cart";
 /// Scroll
 
 /// Image
@@ -32,6 +33,9 @@ const Header = () => {
                     </Link>
                   </span>
                 </div>
+              </li>
+              <li className="nav-item dropdown notification_dropdown">
+                <QuickCartWidget />
               </li>
             </ul>
           </div>

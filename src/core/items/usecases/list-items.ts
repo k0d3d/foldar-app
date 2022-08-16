@@ -41,7 +41,7 @@ export class UseListItems {
 
   }
 
-  async quickListItems() {
+  async quickListItems({useNotifications} = {useNotifications: false}) {
     // calls the save on
     // eslint-disable-next-line no-debugger
     const items = await this.request({limit: 5}).catch( () => {
@@ -52,7 +52,7 @@ export class UseListItems {
     });
 
     if (items?.length) {
-      this.Notification.notifier({
+      useNotifications && this.Notification.notifier({
         message: this.Language.items.list.fetch.success,
         notificationType: 'success',
         heading: this.Language.items.list.fetch.heading

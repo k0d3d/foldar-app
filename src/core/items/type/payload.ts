@@ -18,22 +18,24 @@ export type ItemsPayload = {
 
 
 
-export type ItemsSummaryPayload = {
+export type  ItemsSummaryPanePayload = {
+  _id: string
   itemName: string
   itemCategory: TItemCategory[]
   currentStock?: boolean
   itemBoilingPoint?: number 
-
+  itemPurchaseRate: number
+  lastSupplyDate: string
 } 
 
-export type ItemsSummaryPanePayload = {
+export type ItemsSummaryPayload = {
   _id: any
   itemName: string
   itemDescription: string
   itemCategory: TItemCategory[]
-  itemPurchaseRate?: number
+  itemPurchaseRate: number
   additionalData?: any
-  currentStock?: boolean
+  currentStock: boolean
   itemBoilingPoint?: number 
   lastSupplyDate: string
 } 

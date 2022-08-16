@@ -5,7 +5,7 @@ import Home from "./components/dashboard/Home";
 import { AddItemPage } from "./pages/Items/AddItem";
 import DefaultPageLayout from "./layouts/Default";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AppDefaultsProvider } from "../context/app/app-defaults";
+import { AppRootProvider } from "../context/app/app-root";
 import { EditItemPage } from "./pages/Items/EditItem";
 import { Routes, Route } from "react-router-dom";
 
@@ -50,9 +50,9 @@ function Page() {
 
 return (
   <>
-      <AppDefaultsProvider>
+      <AppRootProvider>
         <DefaultPageLayout menuToggle={menuToggle} routes={<AppRoutes routes={routes} />} pagePath={pagePath}></DefaultPageLayout>
-      </AppDefaultsProvider>
+      </AppRootProvider>
   </>
 );
 }

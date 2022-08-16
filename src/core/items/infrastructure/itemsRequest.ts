@@ -2,7 +2,7 @@ import axiosInstance from '../../auth/infrastructure/axiosInstance'
 import { AddItemPayload, ItemsSummaryPayload } from "../type/payload";
 
 
-export const ItemsRequestFactory = function (Notification) {
+export const itemsRequestFactory = function (Notification) {
   
   const $http = axiosInstance
 

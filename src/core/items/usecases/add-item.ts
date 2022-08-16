@@ -1,6 +1,6 @@
 
 
-import { ItemsRequestFactory } from "../infrastructure/itemsRequests"
+import { itemsRequestFactory } from "../infrastructure/itemsRequest"
 import { AddItemPayload } from "../type/payload"
 
 import { AppLanguage } from "../../lang"
@@ -10,7 +10,7 @@ import { AppError } from "../../error/error"
 
 
 export class UseAddItem{
-  private request: ReturnType<typeof ItemsRequestFactory>
+  private request: ReturnType<typeof itemsRequestFactory>
   private Notification: ReturnType<typeof CreateEventHandler>
   private Language: ReturnType<typeof AppLanguage>
 
@@ -18,7 +18,7 @@ export class UseAddItem{
   constructor(
     private item: AddItemPayload
   ){
-    this.request = ItemsRequestFactory({})
+    this.request = itemsRequestFactory({})
     this.Notification = CreateEventHandler()
     this.Language = AppLanguage()
 

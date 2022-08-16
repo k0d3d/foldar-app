@@ -1,4 +1,4 @@
-import { ItemsActionType } from '../../../context/app/action-constants'
+import { ItemsActionType } from '../../../context/app/action-types'
 import { ItemsPayload, ItemsSummaryPanePayload, ItemsSummaryPayload } from '../../../core/items/type/payload'
 
 type ListItemsTableProps = {
