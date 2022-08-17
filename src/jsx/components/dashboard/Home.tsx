@@ -4,7 +4,7 @@ import { TPendingCartState } from "../../../context/app/TPendingCartState";
 import { TOrderDispatch } from "../../../context/cart/dispatch-handlers";
 import { ItemsSummaryPanePayload } from "../../../core/items/type/payload";
 
-import { ReactComponent as InventoryBagImg } from "../../../images/svg/bag.svg";
+import {MdOutlinePlaylistAdd} from 'react-icons/md'
 import SummaryNavigationPills from "../../../widgets/home/SummaryNav";
 import ItemsSummaryTable from "../../../widgets/items/ItemsSummaryTable";
 import ItemSummaryPane from "../dialog/item-summary-pane";
@@ -45,7 +45,7 @@ function Home() {
         <div className="col-md-4">
           <div className="card">
             <div className="card-body text-center ai-icon  text-primary">
-              <InventoryBagImg />
+              <MdOutlinePlaylistAdd size={70}  />
               <h4 className="my-2">You don&apos;t have items yet</h4>
               <Link to="/add-item" className="btn my-2 btn-primary btn-sm px-4">
                 <i className="fa fa-plus"></i> Add New Item

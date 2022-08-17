@@ -6,6 +6,7 @@ import { useAppRoot } from '../../context/app/app-root'
 import { TRootState } from '../../context/app/rootState'
 import { TOrderDispatch } from '../../context/cart/dispatch-handlers'
 import Moment from 'react-moment';
+import { Link } from 'react-router-dom'
 
 function QuickCartWidget() {
 
@@ -31,7 +32,7 @@ function QuickCartWidget() {
         <div className="pulse-css" />
       </button>
       {
-        widgetDropDown && <div className="dropdown-menu dropdown-menu-end show" data-bs-popper="none">
+        widgetDropDown && (cartItems && cartItems.length > 0) && <div className="dropdown-menu dropdown-menu-end show" data-bs-popper="none">
           <div
             id="DZ_W_Notification1"
             className="widget-media dz-scroll p-3 ps ps--active-y"
@@ -68,9 +69,9 @@ function QuickCartWidget() {
               />
             </div>
           </div>
-          <a className="all-notification" href="#">
+          <Link className="all-notification" to={`/cart`}>
             Show all items.  <i className="ti-arrow-end" />
-          </a>
+          </Link>
         </div>
       }
 

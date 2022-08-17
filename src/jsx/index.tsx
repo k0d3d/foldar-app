@@ -2,12 +2,13 @@ import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
 import Home from "./components/dashboard/Home";
 
-import { AddItemPage } from "./pages/Items/AddItem";
+import { AddItemPage } from "./pages/Item/AddItem";
 import DefaultPageLayout from "./layouts/Default";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppRootProvider } from "../context/app/app-root";
-import { EditItemPage } from "./pages/Items/EditItem";
+import { EditItemPage } from "./pages/Item/EditItem";
 import { Routes, Route } from "react-router-dom";
+import ListCartPage from "./pages/cart/list-cart";
 
 
 
@@ -28,6 +29,10 @@ function Page() {
     {
       url: "edit-item/:itemId",
       component: <EditItemPage />,
+    },
+    {
+      url: "cart",
+      component: <ListCartPage />,
     },
   ];
 
