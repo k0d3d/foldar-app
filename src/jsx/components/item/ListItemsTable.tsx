@@ -1,9 +1,10 @@
-import { ItemsActionType } from '../../../context/app/action-types'
-import { ItemsPayload, ItemsSummaryPanePayload, ItemsSummaryPayload } from '../../../core/items/type/payload'
+
+import { DashboardActionType } from '../../../context/dashboard/action-types'
+import { ItemsPayload, ItemsSummaryPayload } from '../../../core/items/type/payload'
 
 type ListItemsTableProps = {
   items: ItemsPayload[] | ItemsSummaryPayload[],
-  setActiveSummary: React.Dispatch<ItemsActionType>
+  setActiveSummary: React.Dispatch<DashboardActionType>
 }
 
 function ListItemsTable({ items, setActiveSummary }: ListItemsTableProps) {

@@ -1,17 +1,28 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { TPendingCartState } from '../../../context/app/TPendingCartState'
-import { ItemsSummaryPanePayload } from '../../../core/items/type/payload'
+import useItemQueries, { ItemQueryNames } from '../../../core/items/queries/queries'
+import { ItemsPayload, ItemsSummaryPanePayload } from '../../../core/items/type/payload'
+import { UseFetchOneItem } from '../../../core/items/usecases/fetch-one-item'
+import { TCartItem } from '../../../core/order/type/cart'
 
 function ItemSummaryPane({ summary, closeSummary, openQuickOrderPane, quickOrder }: {
   summary: ItemsSummaryPanePayload | null,
   closeSummary: () => void,
-  openQuickOrderPane: (orderItem: ItemsSummaryPanePayload) => void,
+  openQuickOrderPane: (orderItem: TPendingCartState) => void,
   quickOrder?: TPendingCartState
 
 }) {
 
+  
+  const request = new UseFetchOneItem(summary?._id || "") // silence ts
 
-  return summary && (
+  const {data: itemData } = useItemQueries({ queryName: ItemQueryNames.item,  handler: request.fetchOneItem.bind(request) })
+
+  // @ts-ignore
+  const activeItem = {...summary, itemData} 
+
+  return activeItem && summary ? (
     <div className={`chatbox active ${quickOrder ? `has-quick-order` : `` } `}>
       <div className="chatbox-close" />
       <div className="summary custom-tab-1">
@@ -21,19 +32,19 @@ function ItemSummaryPane({ summary, closeSummary, openQuickOrderPane, quickOrder
               <form>
                 <div className="form-group fg-line">
                   <label>Name</label>
-                  <p className="form-control-plaintext input-sm"> {summary.itemName}</p>
+                  <p className="form-control-plaintext input-sm"> {activeItem.itemName}</p>
                 </div>
                 <div className="form-group fg-line">
                   <label>Current Stock</label>
-                  <p className="form-control-plaintext input-sm">{summary.currentStock || 'Empty'}</p>
+                  <p className="form-control-plaintext input-sm">{activeItem.currentStock || 'Empty'}</p>
                 </div>
                 <div className="form-group fg-line">
                   <label>Last Order Date</label>
-                  <p className="form-control-plaintext input-sm">{summary.lastSupplyDate}</p>
+                  <p className="form-control-plaintext input-sm">{activeItem.lastSupplyDate}</p>
                 </div>
                 <div className="form-group fg-line">
                   <label>Purchase Rate</label>
-                  <p className="form-control-plaintext input-sm">{summary.itemPurchaseRate || 0}</p>
+                  <p className="form-control-plaintext input-sm">{activeItem.itemPurchaseRate || 0}</p>
                 </div>
               </form>
             </div>
@@ -41,7 +52,7 @@ function ItemSummaryPane({ summary, closeSummary, openQuickOrderPane, quickOrder
           <div className="summary-actions">
             <p><Link to={`/edit-item/${summary._id}`} className="btn btn-sm btn-block btn-warning" >Edit Item</Link></p>
 
-            <p><a className="btn btn-sm btn-block btn-warning" onClick={() => openQuickOrderPane(summary)}>Add to cart</a></p>
+            <p><a className="btn btn-sm btn-block btn-warning" onClick={() => openQuickOrderPane({itemId: summary._id})}>Add to cart</a></p>
 
 
             <p><a className="btn btn-sm btn-block btn-warning" ui-sref="items.summary.stockhistory">Stock History</a></p>
@@ -54,7 +65,7 @@ function ItemSummaryPane({ summary, closeSummary, openQuickOrderPane, quickOrder
         </div>
       </div>
     </div>
-  )
+  ) : <></>
 
 }
 

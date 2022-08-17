@@ -1,25 +1,46 @@
-import { Link } from 'react-router-dom'
-import { useAppRoot } from '../../../context/app/app-root'
-import { TPendingCartState } from '../../../context/app/TPendingCartState'
-import { ItemsSummaryPanePayload } from '../../../core/items/type/payload'
+import { Link } from "react-router-dom";
+import { useAppRoot } from "../../../context/app/app-root";
+import { TPendingCartState } from "../../../context/app/TPendingCartState";
+import { TOrderDispatch } from "../../../context/cart/dispatch-handlers";
+import { ItemsSummaryPanePayload } from "../../../core/items/type/payload";
 
-import { ReactComponent as InventoryBagImg } from '../../../images/svg/bag.svg'
-import SummaryNavigationPills from '../../../widgets/home/SummaryNav'
-import ItemsSummaryTable from '../../../widgets/items/ItemsSummaryTable'
-import ItemSummaryPane from '../dialog/item-summary-pane'
-import QuickOrderPane from '../dialog/quick-order-pane'
+import { ReactComponent as InventoryBagImg } from "../../../images/svg/bag.svg";
+import SummaryNavigationPills from "../../../widgets/home/SummaryNav";
+import ItemsSummaryTable from "../../../widgets/items/ItemsSummaryTable";
+import ItemSummaryPane from "../dialog/item-summary-pane";
+import QuickOrderPane from "../dialog/quick-order-pane";
 
 function Home() {
-
-  const {state, dashboard} = useAppRoot()
-  const { clearActiveSummary, setQuickOrderItem, clearQuickOrderItem } = dashboard
-  const activeSummary = state.itemSummary as ItemsSummaryPanePayload
-  const quickOrder = state.quickCartItem as TPendingCartState
+  const { state, dashboard, cart } = useAppRoot();
+  const { clearActiveSummary, setQuickOrderItem, clearQuickOrderItem } =
+    dashboard;
+  const activeSummary = state.itemSummary as ItemsSummaryPanePayload;
+  const quickOrder = state.quickCartItem as TPendingCartState;
+  const { addItemToCart } = cart as unknown as TOrderDispatch;
 
   return (
     <>
-      <ItemSummaryPane openQuickOrderPane={setQuickOrderItem} quickOrder={quickOrder}  closeSummary={clearActiveSummary} summary={activeSummary}  />
-      <QuickOrderPane closeQuickOrder={clearQuickOrderItem} quickOrder={quickOrder} summary={activeSummary} />
+      {
+        activeSummary && (
+          <ItemSummaryPane
+            openQuickOrderPane={setQuickOrderItem}
+            quickOrder={quickOrder}
+            closeSummary={clearActiveSummary}
+            summary={activeSummary}
+          />
+        )
+      }
+      {
+        quickOrder && quickOrder.itemId && (
+
+          <QuickOrderPane
+            addItemToCart={addItemToCart}
+            closeQuickOrder={clearQuickOrderItem}
+            itemId={quickOrder.itemId}
+            summary={activeSummary}
+          />
+        )
+      }
       <div className="row">
         <div className="col-md-4">
           <div className="card">
@@ -40,7 +61,7 @@ function Home() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export default Home
+export default Home;

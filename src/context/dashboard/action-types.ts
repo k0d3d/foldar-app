@@ -18,7 +18,7 @@ const actionsList = {
 
 export type DashboardCartActionList = keyof typeof actionsList
 
-export type DashboardCartActionType = {
+export type DashboardActionType = {
   payload?: any,
   type: DashboardCartActionList
 }

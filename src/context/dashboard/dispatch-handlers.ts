@@ -1,7 +1,7 @@
-import { DashboardCartActionType } from "./action-types";
+import { DashboardActionType } from "./action-types";
 
 
-export default function dashboardDispatchHandler (dispatch: React.Dispatch<DashboardCartActionType>) {
+export default function dashboardDispatchHandler (dispatch: React.Dispatch<DashboardActionType>) {
 
   const setActiveSummary = async (payload) => {
     dispatch({

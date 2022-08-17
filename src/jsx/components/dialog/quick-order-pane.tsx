@@ -1,22 +1,38 @@
 import { useState } from "react";
 import { TPendingCartState } from "../../../context/app/TPendingCartState";
 import { ItemsSummaryPanePayload } from "../../../core/items/type/payload";
+import { TCartItem } from "../../../core/order/type/cart";
 
 function QuickOrderPane({
   summary,
   closeQuickOrder,
-  quickOrder
+  itemId,
+  addItemToCart
 }: {
   summary: ItemsSummaryPanePayload | null;
   closeQuickOrder: () => void;
-  quickOrder: TPendingCartState
+  itemId: string | null;
+  addItemToCart: (orderItem: TCartItem) => void
 
 }) {
-  const [orderSupplier, setOrderSupplier] = useState({ supplierName: "" });
+
+  const [orderSupplier, setOrderSupplier] = useState({ supplierID: "",  supplierName: "" });
   const [orderAmount, setOrderAmount] = useState(0);
 
+  const addToCart = () => {
+    if (!itemId || !summary) return
+    addItemToCart({
+      itemId,
+      itemName: summary?.itemName,
+      orderDate: new Date().toDateString(),
+      orderPrice: summary.itemPurchaseRate,
+      orderAmount,
+      orderSupplier
+    });
+  }
+
   return (
-    summary && quickOrder && (
+    summary && itemId ? (
       <div className="chatbox active swing-in-right-fwd ">
         <div className="chatbox-close" />
         <div className="quick-order custom-tab-1">
@@ -46,7 +62,7 @@ function QuickOrderPane({
                     placeholder="Supplier"
                     className="form-control"
                     onChange={(e) =>
-                      setOrderSupplier({ supplierName: e.target.value })
+                      setOrderSupplier({ ...orderSupplier, supplierName: e.target.value })
                     }
                     value={orderSupplier.supplierName}
                   />
@@ -60,6 +76,7 @@ function QuickOrderPane({
                   type="submit"
                   ng-disabled="cartorder.$invalid"
                   ng-click="summary.supplierSelected = 'user_entry'"
+                  onClick={addToCart}
                 >
                   Add to Cart
                 </button>
@@ -77,7 +94,10 @@ function QuickOrderPane({
         </div>
       </div>
     )
+    : <></>
   );
+
+
 }
 
 export default QuickOrderPane;

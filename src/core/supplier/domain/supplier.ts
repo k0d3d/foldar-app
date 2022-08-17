@@ -1,6 +1,6 @@
 
 
 export class Supplier {
-  private readonly supplierID!: string
-  private readonly supplierName!: string
+  readonly supplierID!: string
+  readonly supplierName!: string
 }

@@ -14,6 +14,7 @@ export class UseListItems {
   private Notification: ReturnType<typeof CreateEventHandler>
 
   constructor(
+    // @todo: refactor!! remove request dependency
     private request: (args?: any) => Promise<ItemsSummaryPayload[] | undefined>
   ) {
     this.Language = AppLanguage()

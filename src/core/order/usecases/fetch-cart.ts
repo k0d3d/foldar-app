@@ -3,8 +3,6 @@
 import { AppLanguage } from "../../lang"
 import { CreateEventHandler } from "../../notification/handler"
 import { AppError } from "../../error/error"
-import { TPendingCartState } from "../../../context/app/TPendingCartState"
-import { ItemsPayload, ItemsSummaryPayload } from "../../items/type/payload"
 import { orderRequestFactory } from "../infrastructure/orderRequest"
 import { OrderItem } from "../domain/order"
 

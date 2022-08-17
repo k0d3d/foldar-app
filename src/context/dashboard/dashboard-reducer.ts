@@ -1,10 +1,10 @@
-import { DashboardCartActionType } from "./action-types";
+import { DashboardActionType } from "./action-types";
 import { dashboardState } from "./state";
 import produce from "immer";
 
 
 
-export function dashboardReducer(state: typeof dashboardState, action: DashboardCartActionType) {
+export function dashboardReducer(state: typeof dashboardState, action: DashboardActionType) {
   switch (action.type) {
 
     case "SET_ACTIVE_ITEM_SUMMARY":
@@ -19,7 +19,12 @@ export function dashboardReducer(state: typeof dashboardState, action: Dashboard
 
     case "SET_SUMMARY_QUICK_ORDER_ITEM":
       return produce(state, draft => {
-        draft.quickCartItem = action.payload;
+
+        draft.quickCartItem = {
+          itemId: action.payload.itemId,
+          orderAmount: action.payload.orderAmount,
+          orderSupplier: action.payload.orderSupplier
+        };
       });
 
     case "CLEAR_SUMMARY_QUICK_ORDER_ITEM":

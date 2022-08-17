@@ -1,5 +1,5 @@
-import { OrderItem } from "../../core/order/domain/order";
+import { TCartItemsPayload } from "../../core/order/type/cart";
 
 export const cartState = {
-  cartItems: [] as OrderItem[],
+  cartItems: [] as TCartItemsPayload[],
 }

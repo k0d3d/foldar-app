@@ -1,17 +1,18 @@
 
 
 import React, { useEffect, useState } from 'react'
-import {FaCartArrowDown} from 'react-icons/fa'
+import { FaCartArrowDown } from 'react-icons/fa'
 import { useAppRoot } from '../../context/app/app-root'
 import { TRootState } from '../../context/app/rootState'
 import { TOrderDispatch } from '../../context/cart/dispatch-handlers'
+import Moment from 'react-moment';
 
 function QuickCartWidget() {
 
   const [widgetDropDown, setWidgetDropdown] = useState(false)
   const appRootContext = useAppRoot()
-  const {fetchOrderCartItems} = appRootContext.order as unknown as TOrderDispatch
-  const {cartItems} = appRootContext.state as unknown as TRootState 
+  const { fetchOrderCartItems } = appRootContext.cart as unknown as TOrderDispatch
+  const { cartItems } = appRootContext.state as unknown as TRootState
 
   useEffect(() => {
     fetchOrderCartItems()
@@ -39,27 +40,26 @@ function QuickCartWidget() {
             <ul className="timeline">
               {
                 cartItems.map((item, key) => (
-                <li key={key}>
-                  <div className="timeline-panel">
-                    <div className="media me-2">
-                      <img alt="image" width={50} src="images/avatar/1.jpg" />
+                  <li key={key}>
+                    <div className="timeline-panel">
+                      <div className="media me-2">
+                        <img alt="image" width={50} src="https://picsum.photos/50" />
+                      </div>
+                      <div className="media-body">
+                        <h6 className="mb-1">{item.itemName}</h6>
+                        <small className="d-block">
+                          <Moment calendar>
+
+                            {item.orderDate}
+                          </Moment>
+                        </small>
+                        <small className="d-block">{item.orderAmount} items</small>
+                      </div>
                     </div>
-                    <div className="media-body">
-                      <h6 className="mb-1">{}</h6>
-                      <small className="d-block">29 July 2020 - 02:26 PM</small>
-                    </div>
-                  </div>
-                </li>
+                  </li>
                 ))
               }
             </ul>
-            <div className="ps__rail-x" style={{ left: 0, bottom: 0 }}>
-              <div
-                className="ps__thumb-x"
-                tabIndex={0}
-                style={{ left: 0, width: 0 }}
-              />
-            </div>
             <div className="ps__rail-y" style={{ top: 0, right: 0, height: 380 }}>
               <div
                 className="ps__thumb-y"
@@ -69,7 +69,7 @@ function QuickCartWidget() {
             </div>
           </div>
           <a className="all-notification" href="#">
-            See all notifications <i className="ti-arrow-end" />
+            Show all items.  <i className="ti-arrow-end" />
           </a>
         </div>
       }

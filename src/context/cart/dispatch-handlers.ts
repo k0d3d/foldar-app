@@ -1,8 +1,10 @@
+import { TCartItem } from "../../core/order/type/cart";
+import { UseMutateOrderCart } from "../../core/order/usecases/create-order";
 import { UseFetchOrderCart } from "../../core/order/usecases/fetch-cart";
 import { OrderCartActionType } from "./action-types";
 
 
-export default function orderDispatchHandler (dispatch: React.Dispatch<OrderCartActionType>) {
+export default function cartDispatchHandler (dispatch: React.Dispatch<OrderCartActionType>) {
 
 
   const fetchOrderCartItems = async () => {
@@ -25,9 +27,17 @@ export default function orderDispatchHandler (dispatch: React.Dispatch<OrderCart
 
   }
 
+  const addItemToCart = async (orderItem: TCartItem) => {
+
+    const orderCart = new UseMutateOrderCart()
+    await orderCart.saveCartItem(orderItem)
+  }
+
+
   return {
-    fetchOrderCartItems
+    fetchOrderCartItems,
+    addItemToCart
   }
 }
 
-export type TOrderDispatch = ReturnType<typeof orderDispatchHandler>
+export type TOrderDispatch = ReturnType<typeof cartDispatchHandler>
