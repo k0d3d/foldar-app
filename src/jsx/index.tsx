@@ -9,6 +9,7 @@ import { AppRootProvider } from "../context/app/app-root";
 import { EditItemPage } from "./pages/Item/EditItem";
 import { Routes, Route } from "react-router-dom";
 import ListCartPage from "./pages/cart/list-cart";
+import { AddSupplierPage } from "./pages/supplier/AddSupplier";
 
 
 
@@ -33,6 +34,10 @@ function Page() {
     {
       url: "cart",
       component: <ListCartPage />,
+    },
+    {
+      url: "add-supplier",
+      component: <AddSupplierPage />,
     },
   ];
 

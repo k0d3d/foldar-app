@@ -15,19 +15,6 @@ export type TItemForm = {
 export type AddItemFormFields = keyof TItemForm
 
 
-export type TItemFormFieldArgs = {
-  label: string 
-  placeholder?: string 
-  name: Partial<AddItemFormFields>, 
-  fieldType?: "email" | "text" | "number",
-  fieldTag?: "input" | "select" | "textarea",
-  extraClasses?: string,
-  parentClasses?: string,
-  CustomComponent?: (props: any) => JSX.Element,
-  customComponentProps?: any,
-
-}[]
-
 export type TItemCategory = {
   _id: string,
   categoryName: string,

@@ -1,36 +1,32 @@
 import React from 'react';
 import { Field, Form, Formik } from 'formik';
-import { AddItemFormFields, TItemForm } from '../../core/items/type/types';
 import { TFormFieldArgs } from "../../core/TFormFieldArgs";
 import * as Yup from 'yup'
+import { AddSupplierFormFields, TSupplierForm } from '../../core/supplier/type/type';
 
 
 
-export type CreateAddItemPageArgs = {
-  formFields: TFormFieldArgs<AddItemFormFields>
+export type CreateAddSupplierPageArgs = {
+  formFields: TFormFieldArgs<AddSupplierFormFields>
   formName: string,
-  handleFormSubmit: (value: TItemForm) => Promise<any>,
-  formValues: TItemForm,
+  handleFormSubmit: (value: TSupplierForm) => Promise<any>,
+  formValues: TSupplierForm,
   title?: string
 }
 
-const AddItemSchema: Yup.SchemaOf<Partial<TItemForm>> = Yup.object({
-  itemName: Yup.string().required(),
-  itemDescription: Yup.string().required(),
-  additionalData: Yup.object({}),
-  invoiceNumber: Yup.string(),
-  // itemCategory: Yup.array().of(Yup.string()),
-  itemCategory: Yup.array(),
-  itemPrices: Yup.number(),
-  itemTags: Yup.string(),
-  suppliers: Yup.array().of(Yup.object({})),
-  itemBoilingPoint: Yup.number(),
-  itemPurchaseRate: Yup.number(),
-  sellingPrice: Yup.number()
+const AddSupplierSchema: Yup.SchemaOf<Partial<TSupplierForm>> = Yup.object({
+  supplierName: Yup.string().required(),
+  address: Yup.string().required(),
+  addedOn: Yup.string(),
+  contactPerson: Yup.string(),
+  contactPersonPhone: Yup.string(),
+  phoneNumber: Yup.string(),
+  otherContact: Yup.string(),
+  email: Yup.string()
 });
 
 
-export function CreateAddItemForm(props: CreateAddItemPageArgs): JSX.Element {
+export function CreateAddSupplierForm(props: CreateAddSupplierPageArgs): JSX.Element {
 
   const fieldJsx: JSX.Element[] = [];
 
@@ -59,7 +55,7 @@ export function CreateAddItemForm(props: CreateAddItemPageArgs): JSX.Element {
     <>
       <Formik
         initialValues={props.formValues}
-        validationSchema={AddItemSchema}
+        validationSchema={AddSupplierSchema}
         onSubmit={async (values, actions) => {
           await props.handleFormSubmit(values);
           actions.setSubmitting(false);
@@ -72,7 +68,7 @@ export function CreateAddItemForm(props: CreateAddItemPageArgs): JSX.Element {
               <Form>
                 <>
                   {fieldJsx}
-                  <button disabled={!isValid || !dirty || isSubmitting} type="submit" className="btn btn-primary">Create Item</button>
+                  <button disabled={!isValid || !dirty || isSubmitting} type="submit" className="btn btn-primary">Add Supplier</button>
                 </>
               </Form>
             );

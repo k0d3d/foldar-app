@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { Formik, useFormik } from 'formik';
-import { TItemFormFieldArgs, TItemForm } from '../../core/items/type/types';
+import { AddItemFormFields, TItemForm } from '../../core/items/type/types';
+import { TFormFieldArgs } from "../../core/TFormFieldArgs";
 import * as Yup from 'yup'
 
 
 
 export type CreateEditItemPageArgs = {
-  formFields: TItemFormFieldArgs
+  formFields: TFormFieldArgs<AddItemFormFields>
   formName: string,
   handleFormSubmit: (value: TItemForm) => Promise<any>,
   formValues: TItemForm,

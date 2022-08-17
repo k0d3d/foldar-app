@@ -14,7 +14,7 @@ function ListItemsTable({ items, setActiveSummary }: ListItemsTableProps) {
     <div className="col-xl-12 col-lg-12 col-xxl-12 col-sm-12">
       <div className="card">
         <div className="card-header">
-          <h4 className="card-title">Recent Payments Queue</h4>
+          <h4 className="card-title">Quick Inventory</h4>
         </div>
         <div className="card-body">
           <div className="table-responsive recentOrderTable">
@@ -35,7 +35,7 @@ function ListItemsTable({ items, setActiveSummary }: ListItemsTableProps) {
                       <tr key={key}>
                         <td>{ item.itemName }</td>
                         <td>
-                          { item.itemCategory.length > 1 && `${item.itemCategory.length} categories`  }
+                          { item.itemCategory && item.itemCategory.length > 1 && `${item.itemCategory.length} categories`  }
                           { item.itemCategory && item.itemCategory.length === 1 &&  item.itemCategory[0].categoryName  }
                         </td>
                         <td>{ item.currentStock}</td>

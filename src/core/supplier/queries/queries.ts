@@ -1,11 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 
 
-export enum ItemQueryNames {
-  "item" = "item",
-  "items" = "items",
-  "categories" = "items_categories",
-  "quicklist" = "items_quicklist",
+export enum SupplierQueryNames {
+  "suppliers" = "suppliers",
+  "supplier" = "supplier",
+  "quicklist" = "suppliers_quicklist",
 }
 
 interface QueryHandler<Type> {
@@ -14,11 +13,11 @@ interface QueryHandler<Type> {
 
 type UseQueryProps<T> = {
   handler: QueryHandler<T>,
-  queryName: ItemQueryNames
+  queryName: SupplierQueryNames
 }
 
 
-export default function useItemQueries<T>({ handler, queryName }: UseQueryProps<T>) {
+export default function useSupplierQueries<T>({ handler, queryName }: UseQueryProps<T>) {
   // Access the client
   // const queryClient = useQueryClient()
   // eslint-disable-next-line no-debugger

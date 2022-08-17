@@ -1,4 +1,5 @@
-import { TItemForm, TItemFormFieldArgs } from "../../core/items/type/types"
+import { AddItemFormFields, TItemForm } from "../../core/items/type/types"
+import { TFormFieldArgs } from "../../core/TFormFieldArgs"
 import ItemCategory from "../../jsx/components/item/ItemCategory"
 
 type FormFieldsArgs = {
@@ -7,7 +8,7 @@ type FormFieldsArgs = {
   removeItemCat: (index: number) => void, 
 } 
 
-export const formFields: (args: FormFieldsArgs) => TItemFormFieldArgs = ({openCategoryDialog, formValues, removeItemCat}) => ([
+export const formFields: (args: FormFieldsArgs) => TFormFieldArgs<AddItemFormFields> = ({openCategoryDialog, formValues, removeItemCat}) => ([
   {
     name: "itemName",
     label: "Name",
