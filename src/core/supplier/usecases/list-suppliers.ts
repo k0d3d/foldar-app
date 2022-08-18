@@ -43,6 +43,24 @@ export class UseListSuppliers {
 
   }
 
+  async typeahead(queryString: string) {
+    // calls the save on
+    // eslint-disable-next-line no-debugger
+    const suppliers = await this.request.getSupplierName(queryString).catch( () => {
+
+      const appHasError = new AppError(this.Language.items.list.fetch.error)
+      appHasError.showError()
+      
+    });
+
+    if (suppliers?.length) {
+      return suppliers as TSupplierSummaryPayload[]
+    } else {
+      return []
+    }
+
+  }
+
   async quickListSuppliers({useNotifications} = {useNotifications: false}) {
     // calls the save on
     const suppliers = await this.request.all({limit: 5, page: 0 }).catch( () => {

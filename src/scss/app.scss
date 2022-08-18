@@ -42,7 +42,18 @@ button.nav-link {
   border: none;
 }
 
+.typeaheadset {
+  position: relative;
+}
 
+.type-ahead-drop-down {
+  position: absolute;
+  top: 100%;
+  width: 210px;
+  .basic-list-group {
+    background-color: white;
+  }
+}
 
 
 

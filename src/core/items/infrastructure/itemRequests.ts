@@ -40,25 +40,6 @@ export const itemRequestsFactory = function (Notification) {
       // });
     },
 
-    //Query Supplier Typeahead
-    getSupplierName: function (query, callback) {
-      $http.get('/api/supplier/typeahead/term/supplierName/query/' + encodeURI(query))
-        .then(function (s) {
-          const results: string[] = [];
-          // $.each(s, function () {
-          //   results.push(supplierName);
-          // });
-          callback(results, s);
-        })
-        .catch(function () {
-          Notification.notifier({
-            // message: Language.eng.items.supplier.typeahead.error,
-            type: 'error'
-          });
-        });
-    },
-
-
     fetchItemSummary: async function (id, locationId) {
       const {data} = await $http.get('/api/items/' + encodeURI(id) + '/locations/' + encodeURI(locationId))
       return data

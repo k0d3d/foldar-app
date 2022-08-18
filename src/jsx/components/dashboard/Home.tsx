@@ -12,14 +12,21 @@ import ItemsSummaryTable from "../../../widgets/items/ItemsSummaryTable";
 import ItemSummaryPane from "../dialog/item-summary-pane";
 import QuickOrderPane from "../dialog/quick-order-pane";
 import ListSuppliersTable from "../../../widgets/supplier/list-suppliers";
+import { useState } from "react";
+import { UseListItems } from "../../../core/items/usecases/list-items";
+import { UseListSuppliers } from "../../../core/supplier/usecases/list-suppliers";
 
 function Home() {
+  const [currentPill, setPill] = useState("items")
+
   const { state, dashboard, cart } = useAppRoot();
   const { clearActiveSummary, setQuickOrderItem, clearQuickOrderItem } =
     dashboard;
   const activeSummary = state.itemSummary as ItemsSummaryPanePayload;
   const quickOrder = state.quickCartItem as TPendingCartState;
   const { addItemToCart } = cart as unknown as TOrderDispatch;
+
+  const suppliersReq = new UseListSuppliers()
 
   return (
     <>
@@ -41,6 +48,7 @@ function Home() {
             closeQuickOrder={clearQuickOrderItem}
             itemId={quickOrder.itemId}
             summary={activeSummary}
+            typeahead={ queryString => suppliersReq.typeahead(queryString)}
           />
         )
       }
@@ -75,9 +83,17 @@ function Home() {
       </div>
       <div className="row">
         <div className="col-12col-md-7 col-lg-8 col-sm-12">
-          <SummaryNavigationPills />
-          <ItemsSummaryTable />
-          <ListSuppliersTable />
+          <SummaryNavigationPills currentPill={currentPill} switchPill={setPill} />
+          {
+            currentPill === "items" && (
+              <ItemsSummaryTable />
+            )
+          }
+          {
+            currentPill === "suppliers" && (
+              <ListSuppliersTable />
+            )
+          }
         </div>
       </div>
     </>

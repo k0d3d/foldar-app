@@ -1,12 +1,13 @@
 import React from 'react'
 
-function SummaryNavigationPills() {
+function SummaryNavigationPills({switchPill, currentPill}) {
   return (
     <ul className="nav nav-pills mb-4 light">
       <li className=" nav-item">
         <a
-          href="#navpills-1"
-          className="nav-link active"
+          onClick={ () => switchPill("items") }
+          href="#"
+          className={`nav-link ${ currentPill === "items" && 'active' }`}
           data-bs-toggle="tab"
           aria-expanded="false"
         >
@@ -15,8 +16,9 @@ function SummaryNavigationPills() {
       </li>
       <li className="nav-item">
         <a
-          href="#navpills-2"
-          className="nav-link"
+          onClick={ () => switchPill("orders") }
+          href="#"
+          className={`nav-link ${ currentPill === "orders" && 'active' }`}
           data-bs-toggle="tab"
           aria-expanded="false"
         >
@@ -25,8 +27,9 @@ function SummaryNavigationPills() {
       </li>
       <li className="nav-item">
         <a
-          href="#navpills-3"
-          className="nav-link"
+          onClick={ () => switchPill("suppliers") }
+          href="#"
+          className={`nav-link ${ currentPill === "suppliers" && 'active' }`}
           data-bs-toggle="tab"
           aria-expanded="true"
         >

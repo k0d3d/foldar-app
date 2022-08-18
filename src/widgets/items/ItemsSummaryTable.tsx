@@ -9,8 +9,7 @@ function ItemsSummaryTable() {
   const {dashboard} = useAppRoot()
   const {setActiveSummary} = dashboard
 
-  const listItemsRequest = itemRequestsFactory({})
-  const request = new UseListItems(listItemsRequest.items)
+  const request = new UseListItems()
   
   const query = useItemQueries({ queryName: ItemQueryNames.quicklist,  handler: request.quickListItems.bind(request) })
 
