@@ -95,22 +95,11 @@ export function orderRequestFactory(Notification) {
         }
       );
     },
-    updateOrder: function (o, callback) {
-      $http
+    updateOrder: async function (o) {
+      const {data} = await $http
         .put("/api/orders/" + o._id, o)
-        .then(function (data) {
-          Notification.notifier({
-            // message: Lang.eng.order.update.success,
-            type: "success",
-          });
-          callback(data);
-        })
-        .catch(function () {
-          Notification.notifier({
-            // message: Lang.eng.order.update.error,
-            type: "error",
-          });
-        });
+      return data
+
     },
     count: function (callback) {
       $http.get("api/orders/count").then(function (d) {

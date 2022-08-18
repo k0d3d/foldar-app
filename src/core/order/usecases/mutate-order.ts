@@ -3,8 +3,6 @@
 import { AppLanguage } from "../../lang"
 import { CreateEventHandler } from "../../notification/handler"
 import { AppError } from "../../error/error"
-import { TPendingCartState } from "../../../context/app/TPendingCartState"
-import { ItemsPayload, ItemsSummaryPayload } from "../../items/type/payload"
 import { orderRequestFactory } from "../infrastructure/orderRequest"
 import { TCartItem } from "../type/cart"
 
@@ -52,5 +50,23 @@ export class UseMutateOrderCart {
       }
     );
   }
+
+  async updateOrder(orderItem) {
+    const updateRes = await this.request.updateOrder(orderItem).catch(() => {
+      const appHasError = new AppError(this.Language.items.list.fetch.error)
+      appHasError.showError()
+    })
+    if(updateRes.result === 3 && (orderItem.amountSupplied < orderItem.orderAmount)){ 
+      this.Notification.notifier(
+        {
+          message: `L[L.set].order.update.amountDis`,
+          notificationType: 'success',
+          heading: this.Language.items.list.fetch.heading
+        }
+      );
+    }
+  }
+
+
 
 }

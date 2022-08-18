@@ -34,7 +34,12 @@ const orderState = function (num) {
   return returnVal;
 };
 
-function OrdersList({ orderList }: { orderList: TOrderItemPayload[] }) {
+type OrderListProps = {
+  orderList: TOrderItemPayload[];
+  manageOrder: (orderItem: TOrderItemPayload) => void
+};
+
+function OrdersList({ orderList, manageOrder }: OrderListProps) {
   return (
     <>
       <div className="card">
@@ -70,7 +75,7 @@ function OrdersList({ orderList }: { orderList: TOrderItemPayload[] }) {
                   </td>
                   <td>{order.orderAmount * order.orderPrice}</td>
                   <td title="{order.orderDate | date:'medium'}">
-                    <Moment date={order.orderDate} />
+                    <Moment format="D MMMM YYYY" date={order.orderDate} />
                   </td>
                   <td>
                     {order.isDrugStocOrder
@@ -78,118 +83,13 @@ function OrdersList({ orderList }: { orderList: TOrderItemPayload[] }) {
                       : order.orderSupplier.supplierName}
                   </td>
                   <td className="order-status">
-                    <div
-                      order-item-menu="order-item-menu"
-                      className="btn-group dropdown"
-                    >
-                      <a
+                      <button
                         data-toggle="dropdown"
-                        className="btn btn-mini btn-nobg"
+                        className="btn btn-sm  btn-link"
+                        onClick={() => manageOrder(order)}
                       >
                         {orderState(order.orderStatus)}
-                      </a>
-                      <a
-                        data-toggle="dropdown"
-                        className="btn btn-dropdown-toggle btn-nobg"
-                      >
-                        <span className="caret"></span>
-                      </a>
-                      <div className="dropdown-menu alt-text">
-                        <p>
-                          Please confirm the following <br />
-                          was supplied. <br />
-                        </p>
-                        <dl>
-                          <dt>Item Ordered:</dt>
-                          <dd style={{ color: "#3498db" }}>{order.itemName}</dd>
-                        </dl>
-                        <form className="new-stock-down">
-                          <div className="control-group">
-                            <label className="control-label">
-                              Amount Supplied
-                            </label>
-                            <div className="controls">
-                              <input
-                                type="number"
-                                ng-model="order.amountSupplied"
-                                required={true}
-                                className="input-medium input-block-level"
-                              />
-                              <span className="help-block">
-                                {"addHelpText"}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="control-group">
-                            <label className="control-label">
-                              Invoice Number
-                            </label>
-                            <div className="controls">
-                              <input
-                                type="text"
-                                ng-model="order.orderInvoiceNumber"
-                                required={true}
-                                className="input-medium input-block-level"
-                              />
-                              <span className="help-block">
-                                {"addHelpText"}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="control-group">
-                            <label className="control-label">
-                              Payment Type
-                            </label>
-                            <div className="controls">
-                              <select
-                                ng-model="order.paymentReferenceType"
-                                ng-required="order.nextStatus() == 4"
-                                className="input-medium input-block-level"
-                              >
-                                <option>Cheque</option>
-                                <option>Cash</option>
-                                <option>Bank Transfer</option>
-                              </select>
-                              <span className="help-block">
-                                {"addHelpText"}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="control-group">
-                            <label className="control-label">
-                              Reference ID
-                            </label>
-                            <div className="controls">
-                              <input
-                                type="text"
-                                ng-model="order.paymentReferenceID"
-                                ng-required="order.nextStatus() == 4"
-                                placeholder="Cheque No, Cash Slip ID or Transaction ID"
-                                className="input-medium input-block-level"
-                              />
-                              <span className="help-block">{`addHelpText`}</span>
-                            </div>
-                          </div>
-                          <div className="control-group">
-                            <div className="controls">
-                              <button
-                                ng-click="updateOrder()"
-                                ng-disabled="order.orderBtnDisabled()"
-                                order-item-action-btn="order-item-action-btn"
-                                className="btn btn-inverse input-block-level"
-                              >{`order.nextStatus() | orderState | uppercase`}</button>
-                              <button
-                                ng-click="cancelOrder()"
-                                ng-disabled="order.nextStatus() == 6"
-                                className="btn btn-danger input-block-level"
-                              >
-                                Cancel
-                              </button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
+                      </button>
                   </td>
                   <td>
                     <div className="btn-group">
