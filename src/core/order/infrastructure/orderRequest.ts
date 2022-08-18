@@ -72,22 +72,10 @@ export function orderRequestFactory(Notification) {
       return data
     },
     // Progresses / Moves an order from the cart to pending.
-    postCart: function (form, callback) {
-      $http
-        .post("/api/orders/cart", form)
-        .then(function (data) {
-          Notification.notifier({
-            // message: Lang.eng.order.place.success,
-            type: "success",
-          });
-          callback(data);
-        })
-        .catch(function () {
-          Notification.notifier({
-            // message: Lang.eng.order.place.error,
-            type: "error",
-          });
-        });
+    postCart: async function (selectedCart) {
+      const {data} = await $http
+        .post("/api/orders/cart", selectedCart)
+      return data
     },
     /**
      * Saves an order to the cart

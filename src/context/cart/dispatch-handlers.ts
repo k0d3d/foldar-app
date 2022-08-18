@@ -1,5 +1,5 @@
 import { TCartItem } from "../../core/order/type/cart";
-import { UseMutateOrderCart } from "../../core/order/usecases/create-order";
+import { UseMutateOrderCart } from "../../core/order/usecases/mutate-order";
 import { UseFetchOrderCart } from "../../core/order/usecases/fetch-cart";
 import { OrderCartActionType } from "./action-types";
 
@@ -31,11 +31,13 @@ export default function cartDispatchHandler (dispatch: React.Dispatch<OrderCartA
 
     const orderCart = new UseMutateOrderCart()
     await orderCart.saveCartItem(orderItem)
+    await fetchOrderCartItems()
   }
-
+  
   const placeOrderToSupplier = async (suppierOrder) => {
-    const orderCart = new UseMutateOrderCart()
-    // await orderCart.saveCartItem(suppierOrder)
+    const placeOrder = new UseMutateOrderCart()
+    await placeOrder.placeSupplierOrder(suppierOrder)
+    await fetchOrderCartItems()
   }
 
 

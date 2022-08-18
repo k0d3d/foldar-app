@@ -43,7 +43,7 @@ export class UseListSuppliers {
 
   }
 
-  async typeahead(queryString: string) {
+  async suggestSupplierName(queryString: string) {
     // calls the save on
     // eslint-disable-next-line no-debugger
     const suppliers = await this.request.getSupplierName(queryString).catch( () => {

@@ -2,26 +2,68 @@
 
 import React, { useState } from 'react'
 import Moment from 'react-moment'
+import { useAppRoot } from '../../../context/app/app-root'
+import { TOrderDispatch } from '../../../context/cart/dispatch-handlers'
 import { TCartItemsPayload } from '../../../core/order/type/cart'
+import { UseMutateOrderCart } from '../../../core/order/usecases/mutate-order'
 import { UseListSuppliers } from '../../../core/supplier/usecases/list-suppliers'
 import SupplierNameTypeAhead from '../../../widgets/supplier/supplierNameTypeAhead'
 
 type PurchaseOrderModalProps = {
   selectedCart: TCartItemsPayload[]
+  clearCart: () => void
 }
 
-function PurchaseOrderModal({ selectedCart }: PurchaseOrderModalProps) {
+function PurchaseOrderModal({ clearCart, selectedCart }: PurchaseOrderModalProps) {
 
   const [printOrderToSupplier, setOrderSupplier] = useState(selectedCart[0].orderSupplier)
 
-  const suppliersReq = new UseListSuppliers()
+  const {suggestSupplierName} = new UseListSuppliers()
 
-  function print_purchase_order(arg0: string): React.MouseEventHandler<HTMLButtonElement> | undefined {
-    throw new Error('Function not implemented.')
-  }
+  const appRootContext = useAppRoot()
+  const { placeOrderToSupplier } = appRootContext.cart as unknown as TOrderDispatch
+
+  const placeOrder = async function () {
+
+    // if (!$scope.check_send_sms && !$scope.check_send_email) {
+    //   alert('Please select sms or email to notify supplier');
+    //   return false;
+    // }
+
+    if (!confirm('Confirm you want to place an order for these items!')) {
+      return false;
+    }
+
+    if (!selectedCart.length) {
+      alert('Please select items you want');
+      return false;
+    }
+
+    // if ($scope.check_send_sms) {
+    //   $scope.sms_purchase_order();
+    // }
+
+    // if ($scope.check_send_email) {
+
+    // }
+    await placeOrderToSupplier( selectedCart.map(item => ({
+      isMainStoreOrder: false,
+      itemName: item.itemName,
+      orderAmount: item.orderAmount,
+      orderDate: item.orderDate,
+      orderId: item._id,
+      orderSupplier: {
+        supplierID: printOrderToSupplier.supplierID,
+        supplierName: printOrderToSupplier.supplierName
+      },
+      supplierName: printOrderToSupplier.supplierName
+    })) )
+
+    clearCart()
+  };
 
 
-  function placeOrder(): React.MouseEventHandler<HTMLButtonElement> | undefined {
+  function print_purchase_order(elementClass: string): React.MouseEventHandler<HTMLButtonElement> | undefined {
     throw new Error('Function not implemented.')
   }
 
@@ -45,7 +87,7 @@ function PurchaseOrderModal({ selectedCart }: PurchaseOrderModalProps) {
                     Change Supplier
                   </label>
                   <div className="pr-3">
-                  <SupplierNameTypeAhead orderSupplier={selectedCart[0].orderSupplier} setOrderSupplier={setOrderSupplier} typeaheadRequest={queryString => suppliersReq.typeahead(queryString)} />
+                  <SupplierNameTypeAhead orderSupplier={selectedCart[0].orderSupplier} setOrderSupplier={setOrderSupplier} typeaheadRequest={queryString => suggestSupplierName(queryString)} />
                   </div>
                 </form>
               </div>
@@ -143,20 +185,20 @@ function PurchaseOrderModal({ selectedCart }: PurchaseOrderModalProps) {
             </div>
 
             <div className="modal-footer">
-              <button new-modal="#modal-order-supplied" className="btn btn-default">
+              <button onClick={() => clearCart()} className="btn btn-default">
                 Back
               </button>
               <button
                 ng-class="saveButtonClass"
                 onClick={() => print_purchase_order('.purchase-order')}
-                disabled={!printOrderToSupplier._id}
+                disabled={!printOrderToSupplier.supplierID}
                 className="btn"
               >
                 <i className="fa fa-print"> Print</i>
               </button>
               <button
                 onClick={() => placeOrder()}
-                disabled={!printOrderToSupplier._id}
+                disabled={!printOrderToSupplier.supplierID}
                 className="btn btn-large pull-right btn-success"
               >
                 Place Order

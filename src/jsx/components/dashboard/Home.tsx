@@ -48,7 +48,7 @@ function Home() {
             closeQuickOrder={clearQuickOrderItem}
             itemId={quickOrder.itemId}
             summary={activeSummary}
-            typeahead={ queryString => suppliersReq.typeahead(queryString)}
+            typeahead={ queryString => suppliersReq.suggestSupplierName(queryString)}
           />
         )
       }

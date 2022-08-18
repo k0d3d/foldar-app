@@ -8,10 +8,12 @@ function ListCartPage() {
 
   const [selectedCart, selectCart] = useState<TCartItemsPayload[]>([] as TCartItemsPayload[])
 
+  const clearCart = () => selectCart([])
+
   return (
     <>
     {
-      selectedCart.length > 0 && <PurchaseOrderModal selectedCart={selectedCart} />
+      selectedCart.length > 0 && <PurchaseOrderModal clearCart={clearCart} selectedCart={selectedCart} />
     }
     <div className="row">
       <div className="col-md-10 col-lg-8 mx-auto">

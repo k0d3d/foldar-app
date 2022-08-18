@@ -37,6 +37,20 @@ export class UseMutateOrderCart {
         heading: this.Language.items.list.fetch.heading
       }
     );
-
   }
+
+  async placeSupplierOrder(cartItems: TCartItem[]) {
+    await this.request.postCart(cartItems).catch(() => {
+      const appHasError = new AppError(this.Language.items.list.fetch.error)
+      appHasError.showError()
+    })
+    this.Notification.notifier(
+      {
+        message: this.Language.items.list.fetch.success,
+        notificationType: 'success',
+        heading: this.Language.items.list.fetch.heading
+      }
+    );
+  }
+
 }
