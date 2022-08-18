@@ -10,6 +10,7 @@ import { EditItemPage } from "./pages/Item/EditItem";
 import { Routes, Route } from "react-router-dom";
 import ListCartPage from "./pages/cart/list-cart";
 import { AddSupplierPage } from "./pages/supplier/AddSupplier";
+import ListOrderPage from "./pages/order/ListOrder";
 
 
 
@@ -38,6 +39,10 @@ function Page() {
     {
       url: "add-supplier",
       component: <AddSupplierPage />,
+    },
+    {
+      url: "orders",
+      component: <ListOrderPage />,
     },
   ];
 

@@ -55,13 +55,10 @@ export function orderRequestFactory(Notification) {
         callback(results);
       });
     },
-    orders: function (callback) {
-      const res = [];
-      $http.get("/api/orders").then(function (data) {
-        const r = data;
-        // angular.copy(r, res);
-        return callback(res);
-      });
+    orders: async function () {
+      const {data} = await $http.get("/api/orders") 
+      return data
+
     },
     /**
      * Fetch the items that you have added to your order cart.
