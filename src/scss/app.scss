@@ -55,8 +55,15 @@ button.nav-link {
   }
 }
 
+.help-text {
+  font-size: 0.8em;
+  color: #6d89f5;
+}
 
 
+.modal.show .modal-dialog {
+  transform: translate(0, 15%);
+}
 
 
 

@@ -33,10 +33,17 @@ export default function cartDispatchHandler (dispatch: React.Dispatch<OrderCartA
     await orderCart.saveCartItem(orderItem)
   }
 
+  const placeOrderToSupplier = async (suppierOrder) => {
+    const orderCart = new UseMutateOrderCart()
+    // await orderCart.saveCartItem(suppierOrder)
+  }
+
+
 
   return {
     fetchOrderCartItems,
-    addItemToCart
+    addItemToCart,
+    placeOrderToSupplier
   }
 }
 

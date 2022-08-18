@@ -1,9 +1,14 @@
 export type TItemSupplier = {
-  address: string
+  supplierName: string,
+  phoneNumber?: string,
+  email?: string,
+  address?: string,
+  otherContact?: string,
+  contactPerson?: string,
+  contactPersonPhone?: string,
+  supplierID?: string
   linkedIds?: string[]
   addedOn?: string
-  supplierName: string
-  supplierID?: string
 }  
 
 

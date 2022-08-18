@@ -14,6 +14,7 @@ import "./scss/chatbox.scss";
 import "./scss/app.scss";
 import "./vendor/bootstrap-select/dist/css/bootstrap-select.min.css";
 import './vendor/datatables/css/dataTables.min.css';
+import "./css/bootstrap-4-utilities.css"
 
 
 

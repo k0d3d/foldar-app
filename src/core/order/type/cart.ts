@@ -1,4 +1,5 @@
 import { Supplier } from "../../supplier/domain/supplier"
+import { TItemSupplier } from "../../supplier/type/type"
 
 
 export type TCartItem = {
@@ -10,7 +11,8 @@ export type TCartItem = {
   orderDate: string
 }
 
-export interface TOrderSupplier {
+export interface TOrderSupplier extends TItemSupplier {
+  _id: any
   supplierID: string;
   supplierName: string;
 }

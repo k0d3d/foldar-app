@@ -21,8 +21,8 @@ function QuickOrderPane({
 }: QuickOrderPaneProps) {
 
   const [orderSupplier, setOrderSupplier] = useState({ supplierID: "", supplierName: "" });
-  const [supplierName, setSupplierName] = useState("");
   const [orderAmount, setOrderAmount] = useState(0);
+  const [supplierName, setSupplierName] = useState("");
   const [suggestedSuppliers, setSuggestedSuppliers] = useState<TSupplierSummaryPayload[] | undefined>([])
 
   const addToCart = () => {
@@ -40,7 +40,7 @@ function QuickOrderPane({
   const debouncedSave = useCallback(
     debounce((supplierName) => typeahead(supplierName), 1000),
     []
-);
+  );
 
   const suggestSupplier = async (supplierName: string) => {
     setSupplierName(supplierName)

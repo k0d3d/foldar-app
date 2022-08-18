@@ -1,17 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { TCartItemsPayload } from '../../../core/order/type/cart';
 import { OrderCartItems } from '../../../widgets/cart/OrderCartItems';
+import PurchaseOrderModal from '../../components/dialog/purchase-order-modal';
 
 
 function ListCartPage() {
 
-  
+  const [selectedCart, selectCart] = useState<TCartItemsPayload[]>([] as TCartItemsPayload[])
+
   return (
+    <>
+    {
+      selectedCart.length > 0 && <PurchaseOrderModal selectedCart={selectedCart} />
+    }
     <div className="row">
       <div className="col-md-10 col-lg-8 mx-auto">
-        <OrderCartItems></OrderCartItems>
+        <OrderCartItems placeOrderToSupplier={selectCart} />
 
       </div>
     </div>
+    </>
   )
 }
 
