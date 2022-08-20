@@ -9,10 +9,12 @@ export type TCartItem = {
   orderPrice: number
   orderSupplier: Supplier
   orderDate: string
+  orderItemSize: number
+
 }
 
 export interface TOrderSupplier extends TItemSupplier {
-  _id: any
+  _id?: any
   supplierID: string;
   supplierName: string;
 }
@@ -32,4 +34,5 @@ export interface TCartItemsPayload {
   orderVisibility: boolean;
   orderPrice: number;
   isJuninOrder: boolean;
+  orderItemSize: number
 }

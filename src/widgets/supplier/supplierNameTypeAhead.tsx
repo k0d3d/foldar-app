@@ -18,14 +18,14 @@ function SupplierNameTypeAhead({orderSupplier, setOrderSupplier, typeaheadReques
   const [suggestedSuppliers, setSuggestedSuppliers] = useState<TSupplierSummaryPayload[] | undefined>([])
 
   const debouncedSave = useCallback(
-    debounce((supplierName) => typeaheadRequest(supplierName), 1000),
+    debounce((supplierName) => typeaheadRequest(supplierName), 500),
     []
   );
 
 
   const suggestSupplier = async (supplierName: string) => {
     setSupplierName(supplierName)
-    if(supplierName.length < 2) return
+    if(supplierName.length < 1) return
     const suppliersList = await  debouncedSave(supplierName)
     if (suppliersList){
       setSuggestedSuppliers(suppliersList)

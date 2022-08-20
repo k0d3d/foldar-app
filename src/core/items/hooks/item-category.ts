@@ -22,6 +22,10 @@ export default function useItemCategory(initialFormData?) {
     sellingPrice: 0,
     itemPurchaseRate: 0,
     itemBoilingPoint: 0,
+    itemPackaging: "factory-made",
+    itemForm: "",
+    packageSize: 1,
+    itemSize: 1
     
   } as TItemForm)
 

@@ -10,6 +10,10 @@ export type TItemForm = {
   sellingPrice?: number 
   itemPurchaseRate?: number
   suppliers?: any
+  itemPackaging:string
+  itemForm: string
+  packageSize: number
+  itemSize: number
 }
 
 export type AddItemFormFields = keyof TItemForm

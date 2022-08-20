@@ -3,6 +3,7 @@ import { TItemCategory } from "./types"
 
 
 export type ItemsPayload = {
+  itemSize: number
   itemName: string
   itemDescription: string
   itemCategory: TItemCategory[]
@@ -21,6 +22,7 @@ export type ItemsPayload = {
 export type  ItemsSummaryPanePayload = {
   _id: string
   itemName: string
+  itemSize: number
   itemCategory: TItemCategory[]
   currentStock?: boolean
   itemBoilingPoint?: number 
@@ -38,6 +40,7 @@ export type ItemsSummaryPayload = {
   currentStock: boolean
   itemBoilingPoint?: number 
   lastSupplyDate: string
+  orderItemSize: number
 } 
 
 export type AddItemPayload = {
@@ -51,6 +54,10 @@ export type AddItemPayload = {
   orderInvoiceNumber?: string
   initialStock?: number
   itemClass?: string
+  itemPackaging?:string
+  itemForm?: string
+  packageSize: number
+  itemSize: number
 } 
 
 export type ListItemPayload = {

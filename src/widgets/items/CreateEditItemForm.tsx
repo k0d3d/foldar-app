@@ -3,6 +3,7 @@ import { Formik, useFormik } from 'formik';
 import { AddItemFormFields, TItemForm } from '../../core/items/type/types';
 import { TFormFieldArgs } from "../../core/TFormFieldArgs";
 import * as Yup from 'yup'
+import { ItemSchema } from './ItemSchema';
 
 
 
@@ -14,20 +15,6 @@ export type CreateEditItemPageArgs = {
   title?: string
 }
 
-const ItemSchema: Yup.SchemaOf<Partial<TItemForm>> = Yup.object({
-  itemName: Yup.string().required(),
-  itemDescription: Yup.string().required(),
-  additionalData: Yup.object({}),
-  invoiceNumber: Yup.string(),
-  // itemCategory: Yup.array().of(Yup.string()),
-  itemCategory: Yup.array(),
-  itemPrices: Yup.number(),
-  itemTags: Yup.string(),
-  suppliers: Yup.array().of(Yup.object({})),
-  itemBoilingPoint: Yup.number(),
-  itemPurchaseRate: Yup.number(),
-  sellingPrice: Yup.number()
-});
 
 
 const Field = (props) => {

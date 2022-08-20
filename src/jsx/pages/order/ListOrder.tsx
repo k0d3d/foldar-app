@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import { useGetOrders } from '../../../core/order/queries/getOrders'
 import useOrderQueries, { OrderQueryNames } from '../../../core/order/queries/queries'
 import { TOrderItemPayload } from '../../../core/order/type/payload'
 import { UseFetchOrders } from '../../../core/order/usecases/fetch-orders'
+import { UseMutateOrderCart } from '../../../core/order/usecases/mutate-order'
 import OrdersList from '../../../widgets/order/OrdersList'
 import ManageOrderPane from '../../components/dialog/manage-order-pane'
 import ListItemsTable from '../../components/item/ListItemsTable'
@@ -10,15 +12,18 @@ function ListOrderPage() {
 
   const [ordersfilter, setOrdersfilter] = useState<any>({})
   const [order, setOrder] = useState<TOrderItemPayload | undefined>()
-
-  const request = new UseFetchOrders()
   
-  const query = useOrderQueries({ queryName: OrderQueryNames.orders,  handler: request.getOrders.bind(request) })
+  const query = useGetOrders()
+
+  const removeOrder = async function(order_id){
+    const updatePlacedOrder = new UseMutateOrderCart()
+    await updatePlacedOrder.removeOrder(order_id);
+  };
 
   return (
     <>
       {
-        order && <ManageOrderPane initialOrder={order} />
+        order && <ManageOrderPane closePane={() => setOrder(undefined)} initialOrder={order} />
       }
       <div className="row">
         <div className="col-md-2 col-sm-12">
@@ -37,7 +42,7 @@ function ListOrderPage() {
         </div>
         <div className="col-md-8 col-lg-9 col-sm-12">
           <div className="row">{
-          query.data ? <OrdersList manageOrder={setOrder} orderList={query.data} />: <p>No Data Available</p>
+          query.data ? <OrdersList removeOrder={removeOrder} manageOrder={setOrder} orderList={query.data} />: <p>No Data Available</p>
           }
           </div>
         </div>

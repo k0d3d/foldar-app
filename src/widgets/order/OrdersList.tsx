@@ -1,45 +1,16 @@
 import React from "react";
 import Moment from "react-moment";
 import { TOrderItemPayload } from "../../core/order/type/payload";
-
-const orderState = function (num) {
-  let returnVal;
-  switch (parseInt(num)) {
-    case -1:
-      returnVal = "cancelled";
-      break;
-    case 0:
-      returnVal = "cart";
-      break;
-    case 1:
-      returnVal = "pending order";
-      break;
-    case 2:
-      returnVal = "received";
-      break;
-    case 3:
-      returnVal = "supplied";
-      break;
-    case 4:
-      returnVal = "paid";
-      break;
-    case 5:
-      returnVal = "complete";
-      break;
-    default:
-      returnVal = "processing";
-      break;
-  }
-
-  return returnVal;
-};
+import { orderState } from "./orderState";
+import {FaTimes} from 'react-icons/fa'
 
 type OrderListProps = {
   orderList: TOrderItemPayload[];
   manageOrder: (orderItem: TOrderItemPayload) => void
+  removeOrder: (orderId: string) => void
 };
 
-function OrdersList({ orderList, manageOrder }: OrderListProps) {
+function OrdersList({ orderList, manageOrder, removeOrder }: OrderListProps) {
   return (
     <>
       <div className="card">
@@ -93,12 +64,12 @@ function OrdersList({ orderList, manageOrder }: OrderListProps) {
                   </td>
                   <td>
                     <div className="btn-group">
-                      <a
-                        ng-click="removeOrder($event, order._id)"
-                        className="btn btn-mini btn-danger"
+                      <button
+                        onClick={() => removeOrder( order._id)}
+                        className="btn btn-xs btn-danger"
                       >
-                        <i className="icon-remove"></i>
-                      </a>
+                        <FaTimes />
+                      </button>
                     </div>
                   </td>
                 </tr>

@@ -1,20 +1,26 @@
 import React, { useState } from 'react'
+import { useGetOrders } from '../../../core/order/queries/getOrders';
 import { TOrderItemPayload } from '../../../core/order/type/payload';
 import { UseMutateOrderCart } from '../../../core/order/usecases/mutate-order';
+import { orderState } from '../../../widgets/order/orderState';
 
 type ManageOrderPaneProps = {
   initialOrder: TOrderItemPayload
+  closePane: () => void
 }
 
-function ManageOrderPane({initialOrder}: ManageOrderPaneProps) {
+function ManageOrderPane({initialOrder, closePane}: ManageOrderPaneProps) {
 
   const [order, setOrder] = useState({
     ...initialOrder,
-    amountSupplied: 0,
-    orderInvoiceNumber: "",
-    paymentReferenceType: "",
-    paymentReferenceID: "",
+    amountSupplied: initialOrder.amountSupplied || 0,
+    orderInvoiceNumber: initialOrder.orderInvoiceNumber || "",
+    paymentReferenceType: initialOrder.paymentReferenceType ||"",
+    paymentReferenceID: initialOrder.paymentReferenceID || "",
   })
+
+  const {refetch} = useGetOrders()
+
 
   const nextStatus = function (order) {
     //a Junin order and 'next' status is 'received'
@@ -36,9 +42,6 @@ function ManageOrderPane({initialOrder}: ManageOrderPaneProps) {
     return order.orderStatus + 1;
   };
   
-  function cancelOrder(): React.MouseEventHandler<HTMLButtonElement> | undefined {
-    throw new Error('Function not implemented.')
-  }
 
   const updateOrder = async function(){
     if ((nextStatus(order)) === 2) return false;
@@ -61,18 +64,12 @@ function ManageOrderPane({initialOrder}: ManageOrderPaneProps) {
     const updatePlacedOrder = new UseMutateOrderCart()
     await updatePlacedOrder.updateOrder(orderToGo);
     //   order.orderStatus = nextStatus(order);
-    
+    await refetch()
+    closePane()
   };
 
 
-  // const removeOrder = function(event, order_id){
-  //   const currentItem = event.currentTarget;
-  //   OS.remove(order_id, function(o){
-  //     if(o.state === 1){
-  //       $(currentItem).parents('tr').remove();
-  //     }
-  //   });
-  // };
+
   
 
   return (
@@ -100,6 +97,7 @@ function ManageOrderPane({initialOrder}: ManageOrderPaneProps) {
                   onChange={(e) => setOrder((order) => ({...order, amountSupplied: parseInt(e.target.value) })) }
                   required={true}
                   className="input-medium form-control"
+                  disabled={nextStatus(order) >= 4}
                 />
                 <span className="help-block">
                   {"addHelpText"}
@@ -114,6 +112,7 @@ function ManageOrderPane({initialOrder}: ManageOrderPaneProps) {
                 <input
                   type="text"
                   ng-model="order.orderInvoiceNumber"
+                  disabled={nextStatus(order) >= 4}
                   value={order.orderInvoiceNumber}
                   onChange={(e) => setOrder((order) => ({...order, orderInvoiceNumber: e.target.value })) }
                   required={true}
@@ -124,55 +123,62 @@ function ManageOrderPane({initialOrder}: ManageOrderPaneProps) {
                 </span>
               </div>
             </div>
-            <div className="control-group">
-              <label className="control-label">
-                Payment Type
-              </label>
-              <div className="controls">
-                <select
-                  ng-model="order.paymentReferenceType"
-                  ng-required="nextStatus(order) == 4"
-                  className="default-select  form-control wide"
-                  value={order.paymentReferenceType}
-                  onChange={(e) => setOrder((order) => ({...order, paymentReferenceType: e.target.value })) }
-                >
-                  <option>Cheque</option>
-                  <option>Cash</option>
-                  <option>Bank Transfer</option>
-                </select>
-                <span className="help-block">
-                  {"addHelpText"}
-                </span>
-              </div>
-            </div>
-            <div className="control-group">
-              <label className="control-label">
-                Reference ID
-              </label>
-              <div className="controls">
-                <input
-                  type="text"
-                  ng-model="order.paymentReferenceID"
-                  ng-required="nextStatus(order) == 4"
-                  placeholder="Cheque No, Cash Slip ID or Transaction ID"
-                  className="input-medium form-control "
-                  value={order.paymentReferenceID}
-                  onChange={(e) => setOrder((order) => ({...order, paymentReferenceID: e.target.value })) }
-                />
-                <span className="help-block">{`addHelpText`}</span>
-              </div>
-            </div>
+            {
+              nextStatus(order) >= 4 && (
+                <>
+                  <div className="control-group">
+                    <label className="control-label">
+                      Payment Type
+                    </label>
+                    <div className="controls">
+                      <select
+                        ng-required="nextStatus(order) == 4"
+                        disabled={nextStatus(order) > 4}
+                        className="default-select  form-control wide"
+                        value={order.paymentReferenceType}
+                        onChange={(e) => setOrder((order) => ({...order, paymentReferenceType: e.target.value })) }
+                      >
+                        <option></option>
+                        <option>Cheque</option>
+                        <option>Cash</option>
+                        <option>Bank Transfer</option>
+                      </select>
+                      <span className="help-block">
+                        {"addHelpText"}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="control-group">
+                    <label className="control-label">
+                      Reference ID
+                    </label>
+                    <div className="controls">
+                      <input
+                        type="text"
+                        ng-required="nextStatus(order) == 4"
+                        disabled={nextStatus(order) > 4}
+                        placeholder="Cheque No, Cash Slip ID or Transaction ID"
+                        className="input-medium form-control "
+                        value={order.paymentReferenceID}
+                        onChange={(e) => setOrder((order) => ({...order, paymentReferenceID: e.target.value })) }
+                      />
+                      <span className="help-block">{`addHelpText`}</span>
+                    </div>
+                  </div>
+                </>
+              ) 
+
+            }
             <div className="control-group">
               <div className="controls d-flex justify-content-between">
                 <button
                   onClick={() => updateOrder()}
                   ng-disabled="order.orderBtnDisabled()"
-                  className="btn btn-success "
-                >{`Proceed`}</button>
+                  className="btn btn-success btn-xs text-uppercase"
+                >{orderState(nextStatus(order))}</button>
                 <button
-                  onClick={() => cancelOrder()}
-                  ng-disabled="nextStatus(order) == 6"
-                  className="btn btn-outline-danger btn-sm "
+                  onClick={() => closePane()}
+                  className="btn btn-outline-danger btn-xs "
                 >
                   Cancel
                 </button>

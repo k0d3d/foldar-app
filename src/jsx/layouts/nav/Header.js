@@ -20,6 +20,10 @@ const Header = () => {
               </div>
             </div>
             <ul className="navbar-nav header-right main-notification">
+            <li className="nav-item dropdown notification_dropdown">
+                <QuickCartWidget />
+              </li>
+
               <li className="nav-item">
                 <div className="input-group search-area">
                   <input
@@ -34,9 +38,7 @@ const Header = () => {
                   </span>
                 </div>
               </li>
-              <li className="nav-item dropdown notification_dropdown">
-                <QuickCartWidget />
-              </li>
+
             </ul>
           </div>
         </nav>

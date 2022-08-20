@@ -40,12 +40,18 @@ export default function cartDispatchHandler (dispatch: React.Dispatch<OrderCartA
     await fetchOrderCartItems()
   }
 
+  const removeOrder = async function (order_id) {
+    const updatePlacedOrder = new UseMutateOrderCart()
+    await updatePlacedOrder.removeOrder(order_id);
+    await fetchOrderCartItems()
 
+  };
 
   return {
     fetchOrderCartItems,
     addItemToCart,
-    placeOrderToSupplier
+    placeOrderToSupplier,
+    removeOrder
   }
 }
 

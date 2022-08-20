@@ -28,6 +28,16 @@ function Home() {
 
   const suppliersReq = new UseListSuppliers()
 
+  const afterPlacedOrderCallback = () => {
+    clearQuickOrderItem()
+    clearActiveSummary()
+  }
+
+  const handleAddItemToCart = async (cartData) => {
+    await addItemToCart(cartData)
+    afterPlacedOrderCallback()
+  }
+
   return (
     <>
       {
@@ -36,7 +46,7 @@ function Home() {
             openQuickOrderPane={setQuickOrderItem}
             quickOrder={quickOrder}
             closeSummary={clearActiveSummary}
-            summary={activeSummary}
+            initialItemSummary={activeSummary}
           />
         )
       }
@@ -44,10 +54,10 @@ function Home() {
         quickOrder && quickOrder.itemId && (
 
           <QuickOrderPane
-            addItemToCart={addItemToCart}
+            addItemToCart={handleAddItemToCart}
             closeQuickOrder={clearQuickOrderItem}
             itemId={quickOrder.itemId}
-            summary={activeSummary}
+            initialItemSummary={activeSummary}
             typeahead={ queryString => suppliersReq.suggestSupplierName(queryString)}
           />
         )

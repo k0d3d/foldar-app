@@ -5,5 +5,6 @@ export type TSupplierSummaryPayload = {
   address: string
   linkedIds: string[]
   supplierName: string
+  supplierID: string
   _id: string
 }  

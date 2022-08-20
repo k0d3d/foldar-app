@@ -55,4 +55,28 @@ export const formFields: (args: FormFieldsArgs) => TFormFieldArgs<AddItemFormFie
     label: "Reorder Level",
     parentClasses: "col-md-4",
   },
+  {
+    name: "itemPackaging",
+    fieldType: "text",
+    label: "Item Packaging",
+    parentClasses: "col-md-4",
+  },
+  {
+    name: "itemForm",
+    fieldType: "text",
+    label: "Item Form",
+    parentClasses: "col-md-4",
+  },
+  {
+    name: "packageSize",
+    fieldType: "number",
+    label: "Package Size",
+    parentClasses: "col-md-4",
+  },
+  {
+    name: "itemSize",
+    fieldType: "number",
+    label: "Item Size",
+    parentClasses: "col-md-4",
+  },
 ])

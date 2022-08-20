@@ -106,8 +106,9 @@ export function orderRequestFactory(Notification) {
         callback(d);
       });
     },
-    remove: function (order_id, callback) {
-      $http.delete("/api/orders/" + order_id).then(callback);
+    remove: async function (order_id) {
+      const {data} = await $http.delete("/api/orders/" + order_id)
+      return data
     },
     moreInfo: function (id, callback) {
       $http

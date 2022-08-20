@@ -21,7 +21,7 @@ export class UseMutateOrderCart {
     this.Language = AppLanguage()
   }
 
-  async saveCartItem( cartItem: TCartItem) {
+  async saveCartItem(cartItem: TCartItem) {
     // calls the save on
     // eslint-disable-next-line no-debugger
     await this.request.save(cartItem).catch(() => {
@@ -56,7 +56,7 @@ export class UseMutateOrderCart {
       const appHasError = new AppError(this.Language.items.list.fetch.error)
       appHasError.showError()
     })
-    if(updateRes.result === 3 && (orderItem.amountSupplied < orderItem.orderAmount)){ 
+    if (updateRes.result === 3 && (orderItem.amountSupplied < orderItem.orderAmount)) {
       this.Notification.notifier(
         {
           message: `L[L.set].order.update.amountDis`,
@@ -66,6 +66,23 @@ export class UseMutateOrderCart {
       );
     }
   }
+
+  async removeOrder(orderId) {
+    await this.request.remove(orderId).catch(() => {
+      const appHasError = new AppError(this.Language.items.list.fetch.error)
+      appHasError.showError()
+    })
+    this.Notification.notifier(
+      {
+        message: `Order Removed`,
+        notificationType: 'success',
+        heading: this.Language.items.list.fetch.heading
+      }
+    );
+
+  }
+
+
 
 
 

@@ -1,11 +1,13 @@
 import debounce  from "lodash/debounce";
 import { useCallback, useState } from "react";
+import { useGetItem } from "../../../core/items/queries/getItem";
 import { ItemsSummaryPanePayload } from "../../../core/items/type/payload";
 import { TCartItem } from "../../../core/order/type/cart";
 import { TSupplierSummaryPayload } from "../../../core/supplier/type/payload";
+import SupplierNameTypeAhead from "../../../widgets/supplier/supplierNameTypeAhead";
 
 type QuickOrderPaneProps = {
-  summary: ItemsSummaryPanePayload | null;
+  initialItemSummary: ItemsSummaryPanePayload | null;
   closeQuickOrder: () => void;
   itemId: string | null;
   addItemToCart: (orderItem: TCartItem) => void;
@@ -13,7 +15,7 @@ type QuickOrderPaneProps = {
 };
 
 function QuickOrderPane({
-  summary,
+  initialItemSummary,
   closeQuickOrder,
   itemId,
   addItemToCart,
@@ -22,8 +24,7 @@ function QuickOrderPane({
 
   const [orderSupplier, setOrderSupplier] = useState({ supplierID: "", supplierName: "" });
   const [orderAmount, setOrderAmount] = useState(0);
-  const [supplierName, setSupplierName] = useState("");
-  const [suggestedSuppliers, setSuggestedSuppliers] = useState<TSupplierSummaryPayload[] | undefined>([])
+  const {data: summary} = useGetItem(initialItemSummary?._id || "")
 
   const addToCart = () => {
     if (!itemId || !summary) return
@@ -31,34 +32,18 @@ function QuickOrderPane({
       itemId,
       itemName: summary?.itemName,
       orderDate: new Date().toDateString(),
-      orderPrice: summary.itemPurchaseRate,
+      orderPrice: summary.itemPurchaseRate || 0,
       orderAmount,
-      orderSupplier
+      orderSupplier,
+      orderItemSize: summary?.itemSize || 0
     });
   }
 
-  const debouncedSave = useCallback(
-    debounce((supplierName) => typeahead(supplierName), 1000),
-    []
-  );
-
-  const suggestSupplier = async (supplierName: string) => {
-    setSupplierName(supplierName)
-    if(supplierName.length < 2) return
-    const suppliersList = await  debouncedSave(supplierName)
-    if (suppliersList){
-      setSuggestedSuppliers(suppliersList)
-    }
-  }
 
   const selectItemSupplier = (supplier: TSupplierSummaryPayload) => {
-    setOrderSupplier({
-      supplierID: supplier._id,
-      supplierName: supplier.supplierName
-    })
-    setSuggestedSuppliers(undefined)
-    setSupplierName("")
-  }  
+    setOrderSupplier(supplier)
+  } 
+  
 
   return (
     summary && itemId ? (
@@ -66,8 +51,8 @@ function QuickOrderPane({
         <div className="chatbox-close" />
         <div className="quick-order custom-tab-1">
           <div className="p-3">
-            <div className="card">
-              <div className="card-body">
+            <div className="card mb-1">
+              <div className="card-body card-body m-1 p-1">
                 <form
                   className="cart-order"
                   role="form"
@@ -84,47 +69,9 @@ function QuickOrderPane({
                     required={true}
                   />
 
-                  {/* <label>Current Supplier: <b>{summary.suppliers[0].supplierName}</b></label> */}
-                  <div className="typeaheadset mt-3">
+                  <div className="typeaheadset my-3">
                     <label>Change Supplier</label>
-                    {
-                      orderSupplier.supplierID && (
-                        <p>
-                            Item Supplier:&nbsp;
-                          <strong>
-                            {orderSupplier.supplierName}
-                          </strong>
-                        </p>
-                      )
-                    }
-                    <input
-                      type="text"
-                      placeholder="Type supplier name."
-                      className="form-control"
-                      onChange={(e) =>
-                        suggestSupplier(e.target.value)
-                      }
-                      value={supplierName}
-                    />
-                    {
-                      suggestedSuppliers && suggestedSuppliers.length > 0 && (
-                        <div className="type-ahead-drop-down">
-                          <div className="basic-list-group">
-                            <ul className="list-group">
-                              {
-                                suggestedSuppliers.map((supplier, key) => (
-                                  <li onClick={() => selectItemSupplier(supplier)} className="list-group-item list-group-item-action" key={key}>
-                                    {supplier.supplierName}
-                                  </li>
-                                ))
-                              }
-
-                            </ul>
-                          </div>
-                        </div>
-                      )
-                    }
-
+                    <SupplierNameTypeAhead  typeaheadRequest={typeahead} setOrderSupplier={selectItemSupplier} orderSupplier={orderSupplier} />
                   </div>
                 </form>
               </div>

@@ -1,26 +1,25 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { TPendingCartState } from '../../../context/app/TPendingCartState'
+import { useGetItem } from '../../../core/items/queries/getItem'
 import useItemQueries, { ItemQueryNames } from '../../../core/items/queries/queries'
 import { ItemsPayload, ItemsSummaryPanePayload } from '../../../core/items/type/payload'
 import { UseFetchOneItem } from '../../../core/items/usecases/fetch-one-item'
 import { TCartItem } from '../../../core/order/type/cart'
 
-function ItemSummaryPane({ summary, closeSummary, openQuickOrderPane, quickOrder }: {
-  summary: ItemsSummaryPanePayload | null,
+function ItemSummaryPane({ initialItemSummary: summary, closeSummary, openQuickOrderPane, quickOrder }: {
+  initialItemSummary: ItemsSummaryPanePayload | null,
   closeSummary: () => void,
   openQuickOrderPane: (orderItem: TPendingCartState) => void,
   quickOrder?: TPendingCartState
 
 }) {
 
-  
-  const request = new UseFetchOneItem(summary?._id || "") // silence ts
 
-  const {data: itemData } = useItemQueries({ queryName: ItemQueryNames.item,  handler: request.fetchOneItem.bind(request) })
+  const {data: itemData } = useGetItem(summary?._id  || "") // silence ts
 
   // @ts-ignore
-  const activeItem = {...summary, itemData} 
+  const activeItem = {...summary, ...itemData} 
 
   return activeItem && summary ? (
     <div className={`chatbox active ${quickOrder ? `has-quick-order` : `` } `}>

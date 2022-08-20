@@ -2,7 +2,7 @@ import React from 'react';
 import { Field, Form, Formik } from 'formik';
 import { AddItemFormFields, TItemForm } from '../../core/items/type/types';
 import { TFormFieldArgs } from "../../core/TFormFieldArgs";
-import * as Yup from 'yup'
+import { ItemSchema } from './ItemSchema';
 
 
 
@@ -13,22 +13,6 @@ export type CreateAddItemPageArgs = {
   formValues: TItemForm,
   title?: string
 }
-
-const AddItemSchema: Yup.SchemaOf<Partial<TItemForm>> = Yup.object({
-  itemName: Yup.string().required(),
-  itemDescription: Yup.string().required(),
-  additionalData: Yup.object({}),
-  invoiceNumber: Yup.string(),
-  // itemCategory: Yup.array().of(Yup.string()),
-  itemCategory: Yup.array(),
-  itemPrices: Yup.number(),
-  itemTags: Yup.string(),
-  suppliers: Yup.array().of(Yup.object({})),
-  itemBoilingPoint: Yup.number(),
-  itemPurchaseRate: Yup.number(),
-  sellingPrice: Yup.number()
-});
-
 
 export function CreateAddItemForm(props: CreateAddItemPageArgs): JSX.Element {
 
@@ -59,7 +43,7 @@ export function CreateAddItemForm(props: CreateAddItemPageArgs): JSX.Element {
     <>
       <Formik
         initialValues={props.formValues}
-        validationSchema={AddItemSchema}
+        validationSchema={ItemSchema}
         onSubmit={async (values, actions) => {
           await props.handleFormSubmit(values);
           actions.setSubmitting(false);
