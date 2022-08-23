@@ -14,7 +14,6 @@ export interface TOrderItemPayload {
   orderInvoiceNumber: string;
   orderStatus: number;
   orderVisibility: boolean;
-  isDrugStocOrder: boolean;
   orderDate: Date;
   itemId: string;
   amountSupplied: number;
@@ -26,8 +25,7 @@ export interface TOrderItemPayload {
   orderInvoice: string;
   paymentReferenceID: string;
   paymentReferenceType: string;
-  nafdacRegNo: string;
-  nafdacRegName: string;
+
 }
 
 

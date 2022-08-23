@@ -99,8 +99,8 @@ export function Language(label = "item") {
           "error":"Failed to place a new order. An error occured. Please try again"
         },
         "search":{
-          "error": "Error searching through drug register",
-          "notfound": "Drug not found"
+          "error": "Error searching through item register",
+          "notfound": "Item not found"
         },
         "summary":{
           "error": "Can not fetch more information now."
@@ -122,7 +122,7 @@ export function Language(label = "item") {
           "error" : "Error prescribing items for this patient",
           "fail": "You have not confirmed any items. Check your list"
         },
-        "addDrug":{
+        "addItem":{
           "error": "This item is already in the list"
         },
         "bills":{

@@ -8,8 +8,6 @@ export class OrderItem {
   private readonly orderItemSize!: number
   private readonly product_id!: number
   private readonly sku!: string
-  private readonly nafdacRegNo!: string
-  private readonly nafdacRegName!: string
   private readonly orderAmount!: number
   private readonly orderDate!: Date
   private readonly orderDescription!: string

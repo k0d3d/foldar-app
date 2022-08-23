@@ -133,7 +133,7 @@ function Home() {
                   <div className="card-body text-center ai-icon  text-white">
                     <MdOutlinePointOfSale size={70} />
                     <h4 className="my-2 text-white">
-                      Point of Sale
+                      Stock Out
                     </h4>
 
                   </div>

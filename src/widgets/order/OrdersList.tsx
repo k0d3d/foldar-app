@@ -49,9 +49,7 @@ function OrdersList({ orderList, manageOrder, removeOrder }: OrderListProps) {
                     <Moment format="D MMMM YYYY" date={order.orderDate} />
                   </td>
                   <td>
-                    {order.isDrugStocOrder
-                      ? "DrugStoc"
-                      : order.orderSupplier.supplierName}
+                    {order.orderSupplier.supplierName}
                   </td>
                   <td className="order-status">
                       <button
