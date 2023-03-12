@@ -74,7 +74,7 @@ export function supplierRequestsFactory(Notification) {
     },
     //Query Supplier Typeahead
     getSupplierName: async function (query) {
-      const { data } = await $http.get('/api/supplier/typeahead/term/supplierName/query/' + encodeURI(query))
+      const { data } = await $http.get('/api/suppliers/search?name=' + query)
       return data
     },
 

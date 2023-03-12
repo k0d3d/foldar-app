@@ -65,7 +65,7 @@ export function orderRequestFactory(Notification) {
      * @returns 
      */
     getCartContent: async function getCartContent() {
-      const {data} =  await $http.get("/api/cart");
+      const {data} =  await $http.get("/api/orders/cart");
       return data
     },
     // Progresses / Moves an order from the cart to pending.
